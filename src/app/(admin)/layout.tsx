@@ -2,14 +2,15 @@ import React from "react";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import ProvidersComponent from "../providers";
-import "../globals.css";
+import ProtectedRoute from "./protectedRoute";
 import Header from "@/components/Header";
+import "../globals.css";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Admin Hats & Caps Panel | eCommerce website by Joe",
-  description: "eCommerce Admin Panel made with nextJS and Mongoose",
+  title: "Admin MOVEA | Nimio Studio | Created by Joe",
+  description: "MOVEA Admin Panel made with nextJS and Prisma",
 };
 
 export default function RootLayout({
@@ -18,13 +19,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-      <ProvidersComponent>
-        <html lang="en">
-          <body className={`${montserrat.className} bg-gray-3`}>
+    <ProvidersComponent>
+      <html lang="en">
+        <body className={`${montserrat.className} bg-gray-3`}>
+          <ProtectedRoute>
             <Header role={"ADMIN"} />
-            {children}
-          </body>
-        </html>
-      </ProvidersComponent>
+            <main className="responsive">
+              <span className="responsive_wrapper mb-6">{children}</span>
+            </main>
+          </ProtectedRoute>
+        </body>
+      </html>
+    </ProvidersComponent>
   );
 }

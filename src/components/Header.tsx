@@ -20,10 +20,10 @@ export default function Header({ role }: { role: string }) {
   return (
     <header className="responsive border-b-[2px] border-slate-3">
       <div className="responsive_wrapper flex items-center justify-between">
-        <h1 className="w-full max-w-[220px]">
+        <h1 className="">
           <Link href={"/"}>MOVEA</Link>
         </h1>
-        <nav className="flex gap-12 w-full px-6">
+        <nav className="flex gap-12 px-6">
           {links().map((link, index) => {
             return (
               <Link

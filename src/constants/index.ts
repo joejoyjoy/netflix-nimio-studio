@@ -19,19 +19,11 @@ export const homeHeaderNavLinks = [
 
 export const adminHeaderNavLinks = [
   {
-    label: "Movies",
+    label: "All movies",
     url: "/admin",
   },
   {
-    label: "Categories",
-    url: "/admin/categories",
-  },
-  {
-    label: "Directors",
-    url: "/admin/directors",
-  },
-  {
-    label: "Actors",
-    url: "/admin/actors",
+    label: "Upload Movie",
+    url: "/admin/upload",
   }
 ];
