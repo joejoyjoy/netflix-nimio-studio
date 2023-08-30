@@ -10,13 +10,29 @@
 
 @layer components {
   body {
-    @apply text-gray-5 font-semibold bg-slate-5;
+    @apply text-gray-5 font-semibold bg-slate-7;
   }
 
   .responsive {
     @apply w-full;
   }
   .responsive_wrapper {
-    @apply w-full max-w-[1148px] mx-auto my-0 px-6;
+    @apply w-full max-w-[1148px] mx-auto my-0 py-6 px-8;
+  }
+
+  /*** SPECIFIC STYLE CLASSES ***/
+  .popper-active {
+    @apply opacity-100 pointer-events-auto -translate-y-2 transition duration-200;
+  }
+  .popper-inactive {
+    @apply opacity-0 pointer-events-none z-10 -translate-y-5 transition duration-200;
+  }
+  .popper-card {
+    @apply flex justify-between items-center p-2 rounded-md cursor-pointer hover:bg-slate-2 transition duration-150;
+  }
+
+  .loader {
+    @apply block mx-auto my-28 text-white text-[10px] w-[1em] h-[1em] relative indent-[-9999em] animate-[mulShdSpin_1.3s_infinite_linear] rounded-[50%];
+    transform: translateZ(0);
   }
 }

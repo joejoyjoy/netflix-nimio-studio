@@ -1,21 +1,45 @@
-import UserModalCard from "@/UI/UserModalCard";
+"use client";
 
-export default function Header() {
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import UserModalCard from "@/components/UI/UserModalCard";
+import { adminHeaderNavLinks, homeHeaderNavLinks } from "@/constants";
+import { activeLink } from "./utils/activeLink";
+
+export default function Header({ role }: { role: string }) {
+  const currentPath = usePathname();
+
+  const links = () => {
+    if (role === "ADMIN") {
+      return adminHeaderNavLinks;
+    } else {
+      return homeHeaderNavLinks;
+    }
+  };
+
   return (
     <header className="responsive border-b-[2px] border-slate-3">
-      <div className="responsive_wrapper flex items-center justify-between py-3">
-        <h1>MOVEA</h1>
-        <nav>
-          <ul className="flex gap-8">
-            <li className="text-white">Movies</li>
-            <li>TV shows</li>
-            <li>Animations</li>
-            <li>Plans</li>
-          </ul>
+      <div className="responsive_wrapper flex items-center justify-between">
+        <h1 className="w-full max-w-[220px]">
+          <Link href={"/"}>MOVEA</Link>
+        </h1>
+        <nav className="flex gap-12 w-full px-6">
+          {links().map((link, index) => {
+            return (
+              <Link
+                key={index}
+                href={link.url}
+                className={`whitespace-nowrap ${activeLink(
+                  link.url,
+                  currentPath
+                )}`}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </nav>
-        <div className="text-white bg-red-400 rounded-full">Hello</div>
-
-        <UserModalCard />
+        <UserModalCard role={role} />
       </div>
     </header>
   );
