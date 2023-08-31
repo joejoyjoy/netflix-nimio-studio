@@ -27,6 +27,7 @@ export default function UploadItem({ params }: pageProps) {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const response = await uploadItemForm({ values, branch });
+    if (response.success === "NOT_FOUND") return
     openModal(response);
     if (response.success) {
       const url = "/admin/" + branch;
