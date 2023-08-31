@@ -7,10 +7,9 @@ export const adminDataStructure = [
         name: "title",
         type: "text",
         placeholder: "Movie title",
-        errorMessage:
-          "Movie should have 2-46 characters and shouldn't include any special character!",
+        errorMessage: "Movie should have 2-46 characters",
         label: "Movie Title",
-        pattern: "^[A-Za-z0-9\-.,]{2,46}$",
+        pattern: ".{2,46}",
         required: true,
       },
       {
@@ -18,9 +17,10 @@ export const adminDataStructure = [
         name: "overview",
         type: "textarea",
         placeholder: "About the movie",
-        errorMessage: "It should have 128-512 characters and shouldn't include any special character!",
+        errorMessage: "It should have 128-512 characters",
         label: "Movie Overview",
-        pattern: "^[A-Za-z0-9 ,.'-]{128,512}$",
+        minLength: "128",
+        maxLength: "512",
         required: true,
       },
       {
@@ -40,7 +40,7 @@ export const adminDataStructure = [
         placeholder: "Full duration of movie in minutes",
         errorMessage: "It should be only numbers between 30 and 240 minutes",
         label: "Duration in minutes",
-        pattern: "\b(?:3[0-9]|[4-9][0-9]|1\d{2}|2[0-3]\d|240)\b",
+        pattern: "\\b(?:3[0-9]|[4-9][0-9]|1\\d{2}|2[0-3]\\d|240)\\b",
         required: true,
       },
       {
@@ -51,7 +51,7 @@ export const adminDataStructure = [
         label: "Upload cover of movie",
         required: true,
       },
-    ]
+    ],
   },
   {
     table: "director",
@@ -61,10 +61,9 @@ export const adminDataStructure = [
         name: "name",
         type: "text",
         placeholder: "Insert director name",
-        errorMessage:
-          "The director name should have 2-36 characters and shouldn't include any special character!",
+        errorMessage: "The director name should have 2-36 characters",
         label: "Director name",
-        pattern: "^[a-zA-Z' -]{2,36}$",
+        pattern: ".{2,36}",
         required: true,
       },
       {
@@ -82,12 +81,13 @@ export const adminDataStructure = [
         name: "bio",
         type: "textarea",
         placeholder: "Bio about movie director",
-        errorMessage: "It should have 128-512 characters and shouldn't include any special character!",
+        errorMessage: "It should have 128-512 characters",
         label: "Short bio",
-        pattern: "^[A-Za-z0-9 ,.'-]{128,512}$",
+        minLength: "128",
+        maxLength: "512",
         required: true,
-      }
-    ]
+      },
+    ],
   },
   {
     table: "category",
@@ -97,26 +97,24 @@ export const adminDataStructure = [
         name: "name",
         type: "text",
         placeholder: "Insert category name",
-        errorMessage:
-          "The category name should have 3-13 characters and shouldn't include any special character!",
+        errorMessage: "The category name should have 3-13 characters",
         label: "Category name",
-        pattern: "^[a-zA-Z -]{3,13}$",
+        pattern: ".{3,13}",
         required: true,
-      }
-    ]
+      },
+    ],
   },
   {
-    table: "actors",
+    table: "actor",
     inputs: [
       {
         id: 1,
         name: "name",
         type: "text",
         placeholder: "Insert actor name",
-        errorMessage:
-          "The actor name should have 2-36 characters and shouldn't include any special character!",
+        errorMessage: "The actor name should have 2-36 characters",
         label: "Actor name",
-        pattern: "^[a-zA-Z' -]{2,36}$",
+        pattern: ".{2,36}",
         required: true,
       },
       {
@@ -134,11 +132,35 @@ export const adminDataStructure = [
         name: "bio",
         type: "textarea",
         placeholder: "Bio about the actor",
-        errorMessage: "It should have 128-512 characters and shouldn't include any special character!",
+        errorMessage: "It should have 128-512 characters",
         label: "Short bio",
-        pattern: "^[A-Za-z0-9 ,.'-]{128,512}$",
+        minLength: "128",
+        maxLength: "512",
         required: true,
-      }
-    ]
-  }
+      },
+    ],
+  },
 ];
+
+export const initialValue = {
+  movie: {
+    title: "",
+    overview: "",
+    year: 0,
+    duration: 0,
+    cover: "",
+  },
+  director: {
+    name: "",
+    born: 0,
+    bio: "",
+  },
+  category: {
+    name: "",
+  },
+  actor: {
+    name: "",
+    born: 0,
+    bio: "",
+  },
+};

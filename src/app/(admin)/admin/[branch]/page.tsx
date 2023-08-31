@@ -1,35 +1,36 @@
-import React from "react";
+"use client";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { adminDataStructure } from "@/constants/admin";
 
-export default function ViewAllItems() {
+interface pageProps {
+  params: { branch: string };
+}
+
+export default function ViewAllItems({ params }: pageProps) {
+  const [paramsExist, setParamsExist] = useState(false);
+
+  useEffect(() => {
+    const onParams = () => {
+      adminDataStructure.map((table) => {
+        if (table.table == params.branch) {
+          setParamsExist(true);
+        }
+      });
+    };
+    onParams();
+  }, [paramsExist]);
+
+  if (paramsExist) {
+    return <p className="capitalize">Display all: {params.branch}</p>;
+  }
+
   return (
-    <main className="responsive">
-      <span className="responsive_wrapper mb-6">
-        #Upload movie
-
-        ##Details about the movie
-        title - Input Text
-        overview - TextArea
-        year - Input Number
-        duration - Input Number
-        cover - Upload File
-
-        director - DropDown
-          create: 
-            name - Input Text
-            born - Input Number
-            bio - TextArea
-
-        categories - DropDown
-          create: 
-            name - Input Text
-
-        actors - DropDown
-          create: 
-          name - Input Text
-          born - Input Number
-          bio - TextArea
-
-      </span>
-    </main>
+    <div className="flex flex-col items-center gap-6 my-6">
+      <h2 className="text-3xl uppercase text-center">404 - Page not found</h2>
+      <Link href="/admin/movie" className="button-primary">
+        Back To Home
+      </Link>
+    </div>
   );
 }

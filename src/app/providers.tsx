@@ -3,6 +3,7 @@
 import React from "react";
 import { SessionProvider } from "next-auth/react";
 import AuthProvider from "@/context/AuthContext";
+import ModalProvider from "@/context/ModalContext";
 
 export default function ProvidersComponent({
   children,
@@ -11,7 +12,9 @@ export default function ProvidersComponent({
 }) {
   return (
     <SessionProvider>
-      <AuthProvider>{children}</AuthProvider>
+      <AuthProvider>
+        <ModalProvider>{children}</ModalProvider>
+      </AuthProvider>
     </SessionProvider>
   );
 }

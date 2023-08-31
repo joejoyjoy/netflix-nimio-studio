@@ -19,6 +19,9 @@ const config: Config = {
         bounce: "bounce 0.2s",
         mulShdSpin: "mulShdSpin 1.3s infinite linear",
       },
+      boxShadow: {
+        "3xl": "0 0 175px -10px #8f8f8f",
+      },
       keyframes: {
         bounce: {
           "0%, 100%": {

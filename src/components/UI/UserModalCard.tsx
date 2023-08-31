@@ -14,8 +14,6 @@ export default function UserModalCard({ role }: { role?: string }) {
   const [popperOpen, setPopperOpen] = useState(false);
   let popperRef = useRef<HTMLInputElement>(null);
 
-  console.log(popperOpen);
-
   const handleAction = () => {
     if (user) signOut();
     if (!user) signIn();
@@ -66,7 +64,7 @@ export default function UserModalCard({ role }: { role?: string }) {
   return (
     <div className="flex flex-col justify-center relative" ref={popperRef}>
       <button
-        className="w-9 h-9 p-0 rounded-full drop-shadow-md z-50"
+        className="w-9 h-9 p-0 rounded-full drop-shadow-md z-20"
         onClick={() => setPopperOpen(!popperOpen)}
       >
         <Image
@@ -110,7 +108,10 @@ export default function UserModalCard({ role }: { role?: string }) {
           </div>
           <span className="flex flex-col gap-1 p-2">
             {user?.role === "ADMIN" && (
-              <Link href={role !== "ADMIN" ? "/admin" : "/"} className="popper-card group">
+              <Link
+                href={role !== "ADMIN" ? "/admin" : "/"}
+                className="popper-card group"
+              >
                 {role !== "ADMIN" ? "Admin Panel" : "Back To Home"}
                 <HiOutlineChevronRight
                   size={20}

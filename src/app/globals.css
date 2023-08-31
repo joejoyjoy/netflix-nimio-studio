@@ -20,6 +20,20 @@
     @apply w-full max-w-[1148px] mx-auto my-0 py-6 px-8;
   }
 
+  /*** FORM INPUTS STYLES ***/
+  .form-label {
+    @apply block mb-1 text-sm font-medium text-gray-300;
+  }
+  .form-input-text {
+    @apply bg-slate-3 border border-slate-2 text-gray-300 text-sm rounded-lg outline-none focus:ring-gray-600 focus:border-gray-600 block w-full p-2.5 placeholder-gray-5;
+  }
+  .form-input-text:invalid[data-focused="true"] {
+    @apply border border-red-500
+  }
+  .form-input-text:invalid[data-focused="true"] ~ span {
+    display: block;
+  }
+
   /*** SPECIFIC STYLE CLASSES ***/
   .popper-active {
     @apply opacity-100 pointer-events-auto -translate-y-2 transition duration-200;
@@ -34,5 +48,9 @@
   .loader {
     @apply block mx-auto my-28 text-white text-[10px] w-[1em] h-[1em] relative indent-[-9999em] animate-[mulShdSpin_1.3s_infinite_linear] rounded-[50%];
     transform: translateZ(0);
+  }
+
+  .button-primary {
+    @apply bg-orange-5 text-white text-center py-3 px-8 rounded-full hover:bg-opacity-70 transition duration-300;
   }
 }

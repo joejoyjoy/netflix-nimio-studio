@@ -1,35 +1,59 @@
-import React from "react";
+"use client";
 
-export default function UploadItem() {
+import { ChangeEvent, FormEvent, useContext, useState } from "react";
+import { adminDataStructure, initialValue } from "@/constants/admin";
+import FormPageLayout from "./FormPageLayout";
+import FormInputs from "@/components/FormInputs";
+import { uploadItemForm } from "@/lib/upload.actions";
+import { ModalContext } from "@/context/ModalContext";
+
+interface pageProps {
+  params: { branch: string };
+}
+
+export default function UploadItem({ params }: pageProps) {
+  const { branch } = params;
+  const [values, setValues] = useState(
+    initialValue[branch as keyof typeof initialValue]
+  );
+  const valuesForBranch =
+    values as (typeof initialValue)[keyof typeof initialValue];
+  const { openModal } = useContext(ModalContext);
+
+  const inputs = adminDataStructure.filter((item) => item.table === branch)[0]
+    .inputs;
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const response = await uploadItemForm({ values, branch });
+    openModal(response);
+    // setValues(initialValue[branch as keyof typeof initialValue]);
+  };
+
+  const onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
+
   return (
-    <main className="responsive">
-      <span className="responsive_wrapper flex items-center justify-between py-3 mb-6">
-        #Upload movie
-
-        ##Details about the movie
-        title - Input Text
-        overview - TextArea
-        year - Input Number
-        duration - Input Number
-        cover - Upload File
-
-        director - DropDown
-          create: 
-            name - Input Text
-            born - Input Number
-            bio - TextArea
-
-        categories - DropDown
-          create: 
-            name - Input Text
-
-        actors - DropDown
-          create: 
-          name - Input Text
-          born - Input Number
-          bio - TextArea
-
-      </span>
-    </main>
+    <FormPageLayout branch={branch}>
+      <div className="max-w-[550px] mx-auto">
+        <form onSubmit={handleSubmit} className="flex flex-col justify-center">
+          <h2 className="text-xl text-white mb-6">Upload {branch}</h2>
+          <div className="grid gap-6 mb-6">
+            {inputs.map((input) => (
+              <FormInputs
+                key={input.id}
+                {...input}
+                value={
+                  valuesForBranch[input.name as keyof typeof valuesForBranch]
+                }
+                onChange={onChange}
+              />
+            ))}
+          </div>
+          <button className="button-primary mx-auto mt-6">Submit</button>
+        </form>
+      </div>
+    </FormPageLayout>
   );
 }

@@ -5,6 +5,7 @@ import ProvidersComponent from "../providers";
 import ProtectedRoute from "./protectedRoute";
 import Header from "@/components/Header";
 import "../globals.css";
+import ModalForm from "@/components/UI/ModalForm";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -21,13 +22,14 @@ export default function RootLayout({
   return (
     <ProvidersComponent>
       <html lang="en">
-        <body className={`${montserrat.className} bg-gray-3`}>
+        <body className={`${montserrat.className}`}>
           <ProtectedRoute>
             <Header role={"ADMIN"} />
             <main className="responsive">
-              <span className="responsive_wrapper mb-6">{children}</span>
+              <div className="responsive_wrapper mb-6">{children}</div>
             </main>
           </ProtectedRoute>
+          <ModalForm />
         </body>
       </html>
     </ProvidersComponent>

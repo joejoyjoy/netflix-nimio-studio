@@ -64,7 +64,7 @@ enum Role {
 model Director {
   id    String  @id @default(uuid())
   name  String  @unique
-  born  Int     @db.Year
+  born  Int
   bio   String
   Movie Movie[]
 }
@@ -72,7 +72,7 @@ model Director {
 model Actor {
   id     String  @id @default(uuid())
   name   String  @unique
-  born   Int     @db.Year
+  born   Int
   bio    String
   movies Movie[] @relation("MovieToActor")
 }
@@ -87,11 +87,11 @@ model Movie {
   id         String     @id @default(uuid())
   title      String     @unique
   overview   String
-  year       Int        @db.Year
+  year       Int
   duration   Int
   cover      String
   director   Director   @relation(fields: [directorId], references: [id])
   directorId String
   categories Category[] @relation("MovieToCategory")
-  actors     Actor[]   @relation("MovieToActor")
+  actors     Actor[]    @relation("MovieToActor")
 }

@@ -9,6 +9,12 @@ import { activeLink } from "./utils/activeLink";
 export default function Header({ role }: { role: string }) {
   const currentPath = usePathname();
 
+  const getPathName = () => {
+    const parts = currentPath.split("/");
+    const lastPart = parts[parts.length - 1];
+    return lastPart;
+  };
+
   const links = () => {
     if (role === "ADMIN") {
       return adminHeaderNavLinks;
@@ -39,7 +45,17 @@ export default function Header({ role }: { role: string }) {
             );
           })}
         </nav>
-        <UserModalCard role={role} />
+        <div className="flex items-center gap-6">
+          {role === "ADMIN" && currentPath !== "/admin" && !currentPath.endsWith("/form") ? (
+            <Link
+              href={currentPath + "/form"}
+              className="button-primary text-xs capitalize min-w-[167px]"
+            >
+              Upload {getPathName()}
+            </Link>
+          ) : null}
+          <UserModalCard role={role} />
+        </div>
       </div>
     </header>
   );

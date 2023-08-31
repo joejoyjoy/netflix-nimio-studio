@@ -1,11 +1,9 @@
 import React from "react";
+import { redirect } from 'next/navigation'
+import Loader from "@/components/UI/Loader";
 
 export default function Admin() {
-  return (
-    <main className="responsive">
-      <span className="responsive_wrapper flex items-center justify-between py-3 mb-6">
-        ADMIN content
-      </span>
-    </main>
-  );
+  redirect('/admin/movie')
+
+  return <Loader />;
 }

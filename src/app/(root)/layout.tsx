@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <ProvidersComponent>
-      <html lang="es">
+      <html lang="en">
         <body className={montserrat.className}>{children}</body>
       </html>
     </ProvidersComponent>
