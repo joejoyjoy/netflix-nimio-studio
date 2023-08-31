@@ -1,59 +1,40 @@
 "use client";
 
-import { ChangeEvent, FormEvent, useContext, useState } from "react";
-import { adminDataStructure, initialValue } from "@/constants/admin";
-import FormPageLayout from "./FormPageLayout";
-import FormInputs from "@/components/FormInputs";
-import { uploadItemForm } from "@/lib/upload.actions";
-import { ModalContext } from "@/context/ModalContext";
+import { useContext, useEffect, useState } from "react";
+import Link from "next/link";
+import { adminDataStructure } from "@/constants/admin";
+import { AuthContext } from "@/context/AuthContext";
+import UploadItem from "./formPage";
 
 interface pageProps {
   params: { branch: string };
 }
 
-export default function UploadItem({ params }: pageProps) {
-  const { branch } = params;
-  const [values, setValues] = useState(
-    initialValue[branch as keyof typeof initialValue]
-  );
-  const valuesForBranch =
-    values as (typeof initialValue)[keyof typeof initialValue];
-  const { openModal } = useContext(ModalContext);
+export default function FormPageLayout({ params }: pageProps) {
+  const { isLoading } = useContext(AuthContext);
+  const [paramsExist, setParamsExist] = useState(false);
 
-  const inputs = adminDataStructure.filter((item) => item.table === branch)[0]
-    .inputs;
+  useEffect(() => {
+    const onParams = () => {
+      adminDataStructure.map((table) => {
+        if (table.table == params.branch) {
+          setParamsExist(true);
+        }
+      });
+    };
+    onParams();
+  }, [paramsExist]);
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const response = await uploadItemForm({ values, branch });
-    openModal(response);
-    // setValues(initialValue[branch as keyof typeof initialValue]);
-  };
-
-  const onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
-
-  return (
-    <FormPageLayout branch={branch}>
-      <div className="max-w-[550px] mx-auto">
-        <form onSubmit={handleSubmit} className="flex flex-col justify-center">
-          <h2 className="text-xl text-white mb-6">Upload {branch}</h2>
-          <div className="grid gap-6 mb-6">
-            {inputs.map((input) => (
-              <FormInputs
-                key={input.id}
-                {...input}
-                value={
-                  valuesForBranch[input.name as keyof typeof valuesForBranch]
-                }
-                onChange={onChange}
-              />
-            ))}
-          </div>
-          <button className="button-primary mx-auto mt-6">Submit</button>
-        </form>
+  if (!isLoading && !paramsExist) {
+    return (
+      <div className="flex flex-col items-center gap-6 my-6">
+        <h2 className="text-3xl uppercase text-center">404 - Page not found</h2>
+        <Link href="/admin/movie" className="button-primary">
+          Back To Home
+        </Link>
       </div>
-    </FormPageLayout>
-  );
+    );
+  }
+
+  return <UploadItem params={params} />;
 }

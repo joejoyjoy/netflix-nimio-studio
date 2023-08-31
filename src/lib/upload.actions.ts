@@ -78,7 +78,7 @@ export async function uploadDirector({ values }: { values: Director }) {
             issues: [
               {
                 message:
-                  "The insert name is already used! Change to a different one",
+                  "The inserted name is already used! Change to a different one",
               },
             ],
           },

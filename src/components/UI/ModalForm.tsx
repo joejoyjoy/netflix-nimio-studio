@@ -12,9 +12,9 @@ export default function ModalForm() {
     <div
       className={`absolute inset-0 ${
         isModalOpen ? "flex" : "hidden"
-      } items-center justify-center z-30`}
+      } items-center justify-center z-30 bg-black bg-opacity-70`}
     >
-      <div className="relative rounded-lg bg-gray-700 shadow-3xl w-full max-w-[435px]">
+      <div className="relative rounded-lg bg-gray-700 w-full max-w-[435px]">
         <button
           type="button"
           className="absolute top-3 right-2.5 text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center hover:bg-gray-600 hover:text-white"
