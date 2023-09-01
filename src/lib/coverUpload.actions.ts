@@ -12,7 +12,7 @@ cloudinary.v2.config({
 });
 
 async function savePhotosToLocal(formData: any) {
-  const images = formData.getAll("image");
+  const images = formData.getAll("cover");
   const image = images[0];
 
   const buffersPromise = images.map((pic: any) =>

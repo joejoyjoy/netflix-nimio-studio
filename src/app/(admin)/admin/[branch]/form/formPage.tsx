@@ -1,11 +1,11 @@
 "use client";
 
 import { ChangeEvent, FormEvent, useContext, useState } from "react";
-import { adminDataStructure, initialValue } from "@/constants/admin";
-import FormInputs from "@/components/FormInputs";
 import { useRouter } from "next/navigation";
 import { uploadItemForm } from "@/lib/upload.actions";
 import { ModalContext } from "@/context/ModalContext";
+import { adminDataStructure, initialValue } from "@/constants/admin";
+import FormInputs from "@/components/FormInputs";
 
 interface pageProps {
   params: { branch: string };
@@ -53,6 +53,8 @@ export default function UploadItem({ params }: pageProps) {
     }
   };
 
+  console.log(values);
+
   return (
     <div className="max-w-[550px] mx-auto">
       <form onSubmit={handleSubmit} className="flex flex-col justify-center">
@@ -65,6 +67,8 @@ export default function UploadItem({ params }: pageProps) {
               value={
                 valuesForBranch[input.name as keyof typeof valuesForBranch]
               }
+              values={values}
+              setValues={setValues}
               onChange={onChange}
             />
           ))}
