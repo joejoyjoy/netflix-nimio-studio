@@ -2,11 +2,11 @@
 
 import { z } from "zod";
 import { PrismaClient, Prisma } from "@prisma/client";
-import { uploadPhoto } from "./coverUpload.actions";
+import { deletePhotoOfCloudinary, uploadPhoto } from "./coverUpload.actions";
 const prisma = new PrismaClient();
 
 const MovieSchema = z.object({
-  title: z.string().min(2).max(46),
+  name: z.string().min(2).max(46),
   overview: z.string().min(128).max(512),
   year: z.coerce.number().gt(1970).lt(2024),
   duration: z.coerce.number().gt(30).lt(240),
@@ -34,9 +34,9 @@ export async function uploadMovie({ values }: { values: Movie }) {
     const validate = MovieSchema.safeParse(values);
 
     if (validate.success) {
-      const res = await prisma.movie.create({
+      await prisma.movie.create({
         data: {
-          title: values.title,
+          name: values.name,
           overview: values.overview,
           year: Number(values.year),
           duration: Number(values.duration),
@@ -62,15 +62,12 @@ export async function uploadMovie({ values }: { values: Movie }) {
             })),
           },
         },
-        include: {
-          categories: true,
-          actors: true,
-        },
       });
-      console.log(res);
     }
 
-    console.log(validate.error);
+    if (!validate.success) {
+      deletePhotoOfCloudinary(uploadPicture.public_id);
+    }
 
     return JSON.parse(JSON.stringify(validate));
   } catch (error: any) {
@@ -91,5 +88,31 @@ export async function uploadMovie({ values }: { values: Movie }) {
       }
     }
     throw new Error(`Failed by uploadMovie Fn(): ${error.message}`);
+  }
+}
+
+export async function getAllMovies() {
+  try {
+    const allMovies = await prisma.movie.findMany({});
+
+    return JSON.parse(JSON.stringify(allMovies));
+  } catch (error: any) {
+    throw new Error(`Failed by getAllMovies Fn(): ${error.message}`);
+  }
+}
+
+export async function deleteMovieById(id: string) {
+  try {
+    const deletedMovie = await prisma.movie.delete({
+      where: {
+        id,
+      },
+      include: { cover: true },
+    });
+    console.log(deletedMovie);
+
+    return JSON.parse(JSON.stringify(deletedMovie));
+  } catch (error: any) {
+    throw new Error(`Failed by deleteMovieById Fn(): ${error.message}`);
   }
 }

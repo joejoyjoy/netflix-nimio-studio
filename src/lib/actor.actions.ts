@@ -63,3 +63,17 @@ export async function getAllActors() {
     throw new Error(`Failed by getAllActors Fn(): ${error.message}`);
   }
 }
+
+export async function deleteActorById(id: string) {
+  try {
+    const deletedActor = await prisma.actor.delete({
+      where: {
+        id,
+      },
+    });
+
+    return JSON.parse(JSON.stringify(deletedActor));
+  } catch (error: any) {
+    throw new Error(`Failed by deleteActorById Fn(): ${error.message}`);
+  }
+}

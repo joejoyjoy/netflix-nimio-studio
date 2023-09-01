@@ -39,13 +39,14 @@ model Session {
 }
 
 model User {
-  id       String    @id @default(uuid())
-  name     String
-  email    String    @unique
-  image    String
-  role     Role      @default(BASIC)
-  accounts Account[]
-  sessions Session[]
+  id            String    @id @default(uuid())
+  name          String
+  email         String    @unique
+  emailVerified DateTime?
+  image         String
+  role          Role      @default(BASIC)
+  accounts      Account[]
+  sessions      Session[]
 }
 
 model VerificationToken {
@@ -85,12 +86,12 @@ model Category {
 
 model Movie {
   id         String     @id @default(uuid())
-  title      String     @unique
+  name       String     @unique
   overview   String
   year       Int
   duration   Int
   cover      Cover?
-  director   Director   @relation(fields: [directorId], references: [id])
+  director   Director   @relation(fields: [directorId], references: [id], onDelete: Cascade)
   directorId String
   categories Category[] @relation("MovieToCategory")
   actors     Actor[]    @relation("MovieToActor")
@@ -101,6 +102,6 @@ model Cover {
   public_id  String
   secure_url String
 
-  movie   Movie  @relation(fields: [movieId], references: [id])
+  movie   Movie  @relation(fields: [movieId], references: [id], onDelete: Cascade)
   movieId String @unique
 }

@@ -56,10 +56,24 @@ export async function uploadDirector({ values }: { values: Director }) {
 
 export async function getAllDirectors() {
   try {
-    const allDirectors = await prisma.director.findMany({})
+    const allDirectors = await prisma.director.findMany({});
 
     return JSON.parse(JSON.stringify(allDirectors));
   } catch (error: any) {
     throw new Error(`Failed by getAllDirectors Fn(): ${error.message}`);
+  }
+}
+
+export async function deleteDirectorById(id: string) {
+  try {
+    const deletedDirector = await prisma.director.delete({
+      where: {
+        id,
+      },
+    });
+
+    return JSON.parse(JSON.stringify(deletedDirector));
+  } catch (error: any) {
+    throw new Error(`Failed by deleteDirectorById Fn(): ${error.message}`);
   }
 }

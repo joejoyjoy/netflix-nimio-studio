@@ -1,14 +1,23 @@
+import { getAllMovies } from "@/lib/movie.actions";
+import { getAllDirectors } from "@/lib/director.actions";
+import { getAllCategories } from "@/lib/category.actions";
+import { getAllActors } from "@/lib/actor.actions";
+
 export const adminDataStructure = [
   {
     table: "movie",
+    content: async function () {
+      const res = await getAllMovies();
+      return res;
+    },
     inputs: [
       {
         id: 1,
-        name: "title",
+        name: "name",
         type: "text",
-        placeholder: "Movie title",
+        placeholder: "Movie name",
         errorMessage: "Movie should have 2-46 characters",
-        label: "Movie Title",
+        label: "Movie name",
         pattern: ".{2,46}",
         required: true,
       },
@@ -82,6 +91,10 @@ export const adminDataStructure = [
   },
   {
     table: "director",
+    content: async function () {
+      const res = await getAllDirectors();
+      return res;
+    },
     inputs: [
       {
         id: 1,
@@ -118,6 +131,10 @@ export const adminDataStructure = [
   },
   {
     table: "category",
+    content: async function () {
+      const res = await getAllCategories();
+      return res;
+    },
     inputs: [
       {
         id: 1,
@@ -133,6 +150,10 @@ export const adminDataStructure = [
   },
   {
     table: "actor",
+    content: async function () {
+      const res = await getAllActors();
+      return res;
+    },
     inputs: [
       {
         id: 1,
@@ -171,7 +192,7 @@ export const adminDataStructure = [
 
 export const initialValue = {
   movie: {
-    title: "",
+    name: "",
     overview: "",
     year: 0,
     duration: 0,

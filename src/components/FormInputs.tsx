@@ -29,7 +29,7 @@ interface Props {
   onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   values:
     | {
-        title: string;
+        name: string;
         overview: string;
         year: number;
         duration: number;
@@ -54,7 +54,7 @@ interface Props {
   setvalues: Dispatch<
     SetStateAction<
       | {
-          title: string;
+          name: string;
           overview: string;
           year: number;
           duration: number;

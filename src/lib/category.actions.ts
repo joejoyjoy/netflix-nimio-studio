@@ -59,3 +59,17 @@ export async function getAllCategories() {
     throw new Error(`Failed by getAllCategories Fn(): ${error.message}`);
   }
 }
+
+export async function deleteCategoryById(id: string) {
+  try {
+    const deletedCategory = await prisma.category.delete({
+      where: {
+        id,
+      },
+    });
+
+    return JSON.parse(JSON.stringify(deletedCategory));
+  } catch (error: any) {
+    throw new Error(`Failed by deleteCategoryById Fn(): ${error.message}`);
+  }
+}

@@ -71,3 +71,15 @@ export async function uploadPhoto(formData: any) {
     );
   }
 }
+
+export async function deletePhotoOfCloudinary(public_id: string) {
+  try {
+    cloudinary.v2.uploader.destroy(public_id);
+
+    return;
+  } catch (error: any) {
+    throw new Error(
+      `Failed to uploadPhoto by admin. Fn() uploadPhoto: ${error.message}`
+    );
+  }
+}

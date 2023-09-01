@@ -8,6 +8,7 @@ import { activeLink } from "./utils/activeLink";
 
 export default function Header({ role }: { role: string }) {
   const currentPath = usePathname();
+  const pattern = /\/form.*/;
 
   const getPathName = () => {
     const parts = currentPath.split("/");
@@ -46,7 +47,9 @@ export default function Header({ role }: { role: string }) {
           })}
         </nav>
         <div className="flex items-center gap-6">
-          {role === "ADMIN" && currentPath !== "/admin" && !currentPath.endsWith("/form") ? (
+          {role === "ADMIN" &&
+          currentPath !== "/admin" &&
+          !pattern.test(currentPath) ? (
             <Link
               href={currentPath + "/form"}
               className="button-primary text-xs capitalize min-w-[167px]"
