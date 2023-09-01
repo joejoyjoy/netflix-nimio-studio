@@ -39,6 +39,7 @@ export default function ModalProvider({ children }: { children: ReactNode }) {
     if (!data.success) {
       setModalStatus(data.error.issues[0].message);
       setIsModalOpen(true);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 

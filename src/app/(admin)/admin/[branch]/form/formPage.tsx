@@ -53,8 +53,6 @@ export default function UploadItem({ params }: pageProps) {
     }
   };
 
-  console.log(values);
-
   return (
     <div className="max-w-[550px] mx-auto">
       <form onSubmit={handleSubmit} className="flex flex-col justify-center">
@@ -68,7 +66,7 @@ export default function UploadItem({ params }: pageProps) {
                 valuesForBranch[input.name as keyof typeof valuesForBranch]
               }
               values={values}
-              setValues={setValues}
+              setvalues={setValues}
               onChange={onChange}
             />
           ))}

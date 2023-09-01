@@ -51,7 +51,7 @@ interface Props {
         born: number;
         bio: string;
       };
-  setValues: Dispatch<
+  setvalues: Dispatch<
     SetStateAction<
       | {
           title: string;
@@ -128,7 +128,7 @@ function TypeTextarea(props: { props: Props }) {
 }
 
 function DropdownSelector(props: { props: Props }) {
-  const { label, errorMessage, values, setValues, id, ...inputProps } =
+  const { label, errorMessage, values, setvalues, id, ...inputProps } =
     props.props;
   const [allItems, setAllItems] = useState([]);
   const [disableCheck, setDisableCheck] = useState(false);
@@ -151,8 +151,6 @@ function DropdownSelector(props: { props: Props }) {
       document.removeEventListener("mousedown", handler);
     };
   }, []);
-
-  // useRef()
 
   const getDirectors = async () => {
     const res = await getAllDirectors();
@@ -200,10 +198,8 @@ function DropdownSelector(props: { props: Props }) {
     }
 
     const res = filterTrueValues(selectedItems);
-    setValues({ ...values, [inputProps.name]: res });
+    setvalues({ ...values, [inputProps.name]: res });
   }, [selectedItems]);
-
-  console.log("selected", inputProps.name, selectedItems);
 
   return (
     <div ref={popperRef}>
@@ -254,7 +250,6 @@ function InputTypeFile(props: { props: Props }) {
 
       fileReader.onload = async (event) => {
         const imageDataUrl = event.target?.result?.toString() || "";
-        console.log(imageDataUrl);
         setImagePreview(imageDataUrl);
       };
 

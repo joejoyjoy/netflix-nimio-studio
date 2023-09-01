@@ -11,18 +11,12 @@ const MovieSchema = z.object({
   year: z.coerce.number().gt(1970).lt(2024),
   duration: z.coerce.number().gt(30).lt(240),
   cover: z.object({
-    public_id: z.string().max(256),
-    secure_url: z.string().max(256),
+    public_id: z.string().max(256).optional(),
+    secure_url: z.string().max(256).optional(),
   }),
-  director: z.object({
-    directorId: z.string(),
-  }),
-  category: z.object({
-    categoryId: z.string(),
-  }),
-  actor: z.object({
-    actorId: z.string(),
-  }),
+  director: z.array(z.string()),
+  category: z.array(z.string()),
+  actor: z.array(z.string()),
 });
 
 type Movie = z.infer<typeof MovieSchema>;
@@ -35,48 +29,50 @@ export async function uploadMovie({ values }: { values: Movie }) {
       );
     }
 
-    /* values = {
-      title: "Hellow",
-      overview:
-        "Some description",
-      year: "2001",
-      duration: "100",
-      cover: {},
-      actor: ["6a1aa952-5ba4-4403-b6a8-d54fff58f702"],
-      director: ["45785611-82c9-48ab-bd93-68e854a4e61d"],
-      category: [
-        "43fad919-d029-4d94-acfb-df5dffde7699",
-        "bc0af8fe-9745-463e-8374-11a19d7975b4",
-      ],
-    }; */
-
     const uploadPicture = await uploadPhoto(values.cover);
 
-    // const validate = MovieSchema.safeParse(values);
+    const validate = MovieSchema.safeParse(values);
 
-    const res = await prisma.movie.create({
-      data: {
-        title: values.title,
-        overview: values.overview,
-        year: Number(values.year),
-        duration: Number(values.duration),
-        cover: {
-          create: {
-            public_id: uploadPicture.public_id,
-            secure_url: uploadPicture.secure_url,
+    if (validate.success) {
+      const res = await prisma.movie.create({
+        data: {
+          title: values.title,
+          overview: values.overview,
+          year: Number(values.year),
+          duration: Number(values.duration),
+          cover: {
+            create: {
+              public_id: uploadPicture.public_id,
+              secure_url: uploadPicture.secure_url,
+            },
+          },
+          director: {
+            connect: {
+              id: values.director[0],
+            },
+          },
+          actors: {
+            connect: values.actor.map((actorId) => ({
+              id: actorId,
+            })),
+          },
+          categories: {
+            connect: values.category.map((categoryId) => ({
+              id: categoryId,
+            })),
           },
         },
-        director: {
-          connect: {
-            id: values.director[0],
-          },
+        include: {
+          categories: true,
+          actors: true,
         },
-      },
-    });
+      });
+      console.log(res);
+    }
 
-    console.log(res);
+    console.log(validate.error);
 
-    return JSON.parse(JSON.stringify(res));
+    return JSON.parse(JSON.stringify(validate));
   } catch (error: any) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2002") {
