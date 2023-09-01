@@ -28,9 +28,21 @@
     @apply bg-slate-3 border border-slate-2 text-gray-300 text-sm rounded-lg outline-none focus:ring-gray-600 focus:border-gray-600 block w-full p-2.5 placeholder-gray-5;
   }
   .form-input-text:invalid[data-focused="true"] {
-    @apply border border-red-500
+    @apply border border-red-500;
   }
   .form-input-text:invalid[data-focused="true"] ~ span {
+    display: block;
+  }
+  .label-file-form {
+    @apply w-72 h-96 bg-slate-3 border border-slate-2 text-gray-500 text-lg rounded-lg focus:outline-none cursor-pointer;
+  }
+  .label-file-preview-form {
+    @apply absolute inset-0 flex justify-center items-center w-[264px] h-[360px] m-[11.5px] text-gray-300 text-2xl object-cover opacity-0 rounded-sm transition duration-200 cursor-pointer;
+  }
+  .label-file-form:invalid {
+    @apply border border-red-500;
+  }
+  .label-file-form:invalid ~ span {
     display: block;
   }
 

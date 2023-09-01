@@ -148,7 +148,10 @@ export const initialValue = {
     overview: "",
     year: 0,
     duration: 0,
-    cover: "",
+    cover: {
+      public_id: "",
+      secure_url: "",
+    },
   },
   director: {
     name: "",

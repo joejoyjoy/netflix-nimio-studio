@@ -2,6 +2,7 @@
 
 import { z } from "zod";
 import { PrismaClient, Prisma } from "@prisma/client";
+import { uploadPhoto } from "./coverUpload.actions";
 const prisma = new PrismaClient();
 
 export async function uploadItemForm({
@@ -19,6 +20,8 @@ export async function uploadItemForm({
     }
 
     if (branch === "movie") {
+      const response = await uploadMovie({ values });
+      return response;
     }
 
     if (branch === "director") {
@@ -43,6 +46,72 @@ export async function uploadItemForm({
     return err;
   } catch (error: any) {
     throw new Error(`Failed by postNewDirector Fn(): ${error.message}`);
+  }
+}
+
+const MovieSchema = z.object({
+  title: z.string().min(2).max(46),
+  overview: z.string().min(128).max(512),
+  year: z.coerce.number().gt(1970).lt(2024),
+  duration: z.coerce.number().gt(30).lt(240),
+  cover: z.object({
+    public_id: z.string().max(256),
+    secure_url: z.string().max(256),
+  }),
+});
+
+type Movie = z.infer<typeof MovieSchema>;
+
+export async function uploadMovie({ values }: { values: Movie }) {
+  try {
+    if (!values) {
+      return console.error(
+        "Error: The value or branch does not contain any data in uploadMovie Fn()"
+      );
+    }
+
+    const uploadPicture = await uploadPhoto(values.cover);
+
+    values.cover = uploadPicture
+
+    const validate = MovieSchema.safeParse(values);
+
+    if (validate.success) {
+      await prisma.movie.create({
+        data: {
+          title: values.title,
+          overview: values.overview,
+          year: Number(values.year),
+          duration: Number(values.duration),
+          cover: {
+            create: {
+              public_id: values.cover.public_id,
+              secure_url: values.cover.secure_url
+            }
+          }
+        },
+      });
+    }
+
+    return JSON.parse(JSON.stringify(validate));
+  } catch (error: any) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === "P2002") {
+        const response = {
+          success: false,
+          error: {
+            issues: [
+              {
+                message:
+                  "The inserted name is already used! Change to a different one",
+              },
+            ],
+          },
+        };
+        return response;
+      }
+    }
+    throw new Error(`Failed by uploadMovie Fn(): ${error.message}`);
   }
 }
 

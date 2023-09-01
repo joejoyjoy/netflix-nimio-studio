@@ -47,14 +47,6 @@ export default function ModalProvider({ children }: { children: ReactNode }) {
     setIsModalOpen(false);
   };
 
-  useEffect(() => {
-    if (isModalOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.removeAttribute("style");
-    }
-  }, [isModalOpen]);
-
   return (
     <ModalContext.Provider
       value={{

@@ -1,4 +1,7 @@
-import { ChangeEvent, FocusEvent, Suspense, useState } from "react";
+import { ChangeEvent, FocusEvent, FormEvent, Suspense, useState } from "react";
+import Image from "next/image";
+import { PiPlus } from "react-icons/pi";
+import { CiTrash } from "react-icons/ci";
 
 interface Props {
   id: number;
@@ -73,14 +76,77 @@ function TypeTextarea(props: { props: Props }) {
 
 function InputTypeFile(props: { props: Props }) {
   const { label, errorMessage, onChange, id, ...inputProps } = props.props;
+  const [imagePreview, setImagePreview] = useState<string>("");
+
+  const handleFile = (e: FormEvent<HTMLInputElement>) => {
+    const fileReader = new FileReader();
+
+    const target = e.target as HTMLInputElement;
+    const file: File = (target.files as FileList)[0];
+
+    if (file) {
+      if (!file.type.includes("image")) return;
+
+      fileReader.onload = async (event) => {
+        const imageDataUrl = event.target?.result?.toString() || "";
+        console.log(imageDataUrl);
+        setImagePreview(imageDataUrl);
+      };
+
+      fileReader.readAsDataURL(file);
+    }
+  };
+
+  const handleFileDelete = () => {
+    setImagePreview("");
+  };
 
   return (
     <>
-      <input
-        {...inputProps}
-        onChange={onChange}
-        className="block w-full text-sm  border rounded-lg cursor-pointer text-gray-400 focus:outline-none bg-gray-700 border-gray-600 placeholder-gray-400"
-      />
+      <div>
+        {imagePreview ? (
+          <button
+            onClick={handleFileDelete}
+            className="relative label-file-form group overflow-hidden p-3"
+          >
+            <div className="flex items-center w-full h-full overflow-hidden">
+              <Image
+                src={imagePreview}
+                alt="profile icon"
+                width={288}
+                height={384}
+                className="block w-full h-hull object-cover rounded-sm"
+                placeholder="blur"
+                blurDataURL={imagePreview}
+                priority
+              />
+              <div className="label-file-preview-form group-hover:opacity-100 group-hover:bg-black group-hover:bg-opacity-40">
+                <CiTrash />
+              </div>
+            </div>
+          </button>
+        ) : (
+          <>
+            <label
+              htmlFor="product_image"
+              className="label-file-form flex flex-col justify-center items-center"
+            >
+              <PiPlus size={47} />
+              Upload
+            </label>
+            <input
+              {...inputProps}
+              id="product_image"
+              accept="image/*"
+              placeholder="Add profile photo"
+              className="hidden"
+              value={undefined}
+              onInput={(e) => handleFile(e)}
+              onChange={onChange}
+            />
+          </>
+        )}
+      </div>
     </>
   );
 }

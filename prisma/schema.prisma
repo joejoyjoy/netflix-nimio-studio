@@ -89,9 +89,18 @@ model Movie {
   overview   String
   year       Int
   duration   Int
-  cover      String
+  cover      Cover?
   director   Director   @relation(fields: [directorId], references: [id])
   directorId String
   categories Category[] @relation("MovieToCategory")
   actors     Actor[]    @relation("MovieToActor")
+}
+
+model Cover {
+  id         String @id @default(uuid())
+  public_id  String
+  secure_url String
+
+  movie   Movie  @relation(fields: [movieId], references: [id])
+  movieId String @unique
 }

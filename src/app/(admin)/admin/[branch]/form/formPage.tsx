@@ -3,7 +3,7 @@
 import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import { adminDataStructure, initialValue } from "@/constants/admin";
 import FormInputs from "@/components/FormInputs";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 import { uploadItemForm } from "@/lib/upload.actions";
 import { ModalContext } from "@/context/ModalContext";
 
@@ -19,7 +19,7 @@ export default function UploadItem({ params }: pageProps) {
   const valuesForBranch =
     values as (typeof initialValue)[keyof typeof initialValue];
   const { openModal } = useContext(ModalContext);
-  const router = useRouter()
+  const router = useRouter();
 
   const inputs = adminDataStructure.filter((item) => item.table === branch)[0]
     .inputs;
@@ -27,7 +27,7 @@ export default function UploadItem({ params }: pageProps) {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const response = await uploadItemForm({ values, branch });
-    if (response.success === "NOT_FOUND") return
+    if (response.success === "NOT_FOUND") return;
     openModal(response);
     if (response.success) {
       const url = "/admin/" + branch;
@@ -37,7 +37,20 @@ export default function UploadItem({ params }: pageProps) {
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
+    const target = e.target as HTMLInputElement;
+
+    if (target.type === "file") {
+      const file = target.files?.[0];
+
+      if (file) {
+        const formData = new FormData();
+        formData.append(target.name, file);
+
+        setValues({ ...values, [target.name]: formData });
+      }
+    } else {
+      setValues({ ...values, [target.name]: target.value });
+    }
   };
 
   return (
