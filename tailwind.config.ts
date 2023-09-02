@@ -69,6 +69,16 @@ const config: Config = {
         },
       },
     },
+    screens: {
+      tablet: "520px",
+      // => @media (min-width: 520px) { ... }
+
+      laptop: "830px",
+      // => @media (min-width: 830px) { ... }
+
+      desktop: "1280px",
+      // => @media (min-width: 1280px) { ... }
+    },
   },
   plugins: [],
 };

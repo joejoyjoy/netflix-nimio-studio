@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { downScaleImage } from "@/utils/downScaleImage";
 import { minutesToHours } from "@/utils/minutesToHours";
-import { FaPlay } from "react-icons/Fa";
+import { FaPlay } from "react-icons/fa";
 
 export default function MovieCard({ data }) {
   return (
@@ -13,14 +13,16 @@ export default function MovieCard({ data }) {
         alt={data.name}
         className="object-cover"
         fill={true}
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 50vw"
+        priority
       />
       <div className="absolute bottom-0 w-full aspect-[5/1] flex items-center p-4 rounded-2xl backdrop-blur-sm bg-gray-400/40">
         <div className="p-3 bg-gray-300/70 rounded-full">
           <FaPlay className="text-white text-sm" />
         </div>
         <div className="mx-3">
-          <h2 className="text-white leading-5">{data.name}</h2>
-          <p className="text-white text-sm font-light leading-4">
+          <h2 className="text-white leading-5 line-clamp-1">{data.name}</h2>
+          <p className="text-white text-sm font-light leading-4 line-clamp-1">
             {data.categories[0].name}{" "}
             {data.categories[1]?.name ? " / " + data.categories[1].name : ""}
           </p>

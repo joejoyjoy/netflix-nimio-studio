@@ -113,26 +113,41 @@ function DropdownSelector(props: { props: Props }) {
   }, []);
 
   return (
-    <div ref={popperRef}>
+    <div ref={popperRef} className="relative">
       <button
         type="button"
         onClick={() => setPopperOpen(!popperOpen)}
-        className="form-input-text text-left"
+        className="form-input-checkbox text-left"
       >
-        -- Select your states --
+        {values[inputProps.name] === undefined
+          ? "-- Select your states --"
+          : "-- " + values[inputProps.name].length + " selected --"}
       </button>
       {popperOpen && (
-        <div>
+        <div className="absolute top-12 max-w-[550px] max-h-[260px] form-input-checkbox overflow-y-auto p-0 z-10">
           {allItems.map((item) => (
-            <div key={item.id}>
-              <input
-                id={`input-${item.id}`}
-                type="checkbox"
-                onChange={(e) => handleChange(item.id)}
-                checked={checkIfTrue(item.id)}
-                required
-              />
-              <label htmlFor={`input-${item.id}`}>{item.name}</label>
+            <div
+              key={item.id}
+              className={`border-b border-gray-600 last:border-b-0 p-4 hover:bg-slate-2 ${
+                checkIfTrue(item.id) ? "bg-orange-500/10" : ""
+              }`}
+            >
+              <div className="mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem]">
+                <input
+                  id={`input-${item.id}`}
+                  type="checkbox"
+                  onChange={(e) => handleChange(item.id)}
+                  checked={checkIfTrue(item.id)}
+                  required
+                  className="form-input-checkbox-icon  "
+                />
+                <label
+                  htmlFor={`input-${item.id}`}
+                  className="block pl-[0.15rem] hover:cursor-pointer"
+                >
+                  {item.name}
+                </label>
+              </div>
             </div>
           ))}
         </div>

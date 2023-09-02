@@ -20,7 +20,7 @@ export default function Home() {
   return (
     <main className="responsive">
       <div className="responsive_wrapper">
-        <div className="grid grid-cols-3 gap-8">
+        <div className="grid laptop:grid-cols-3 tablet:grid-cols-2 grid-cols-1 gap-8">
           {moviesData.map((movie) => (
             <MovieCard key={movie.id} data={movie} />
           ))}

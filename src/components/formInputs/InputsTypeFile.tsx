@@ -90,9 +90,11 @@ function InputTypeFile(props: { props: Props }) {
                 blurDataURL={imagePreview || values?.cover.secure_url}
                 priority
               />
-              <div className="label-file-preview-form group-hover:opacity-100 group-hover:bg-black group-hover:bg-opacity-40">
-                <CiTrash />
-              </div>
+              {values?.cover.secure_url === undefined && (
+                <div className="label-file-preview-form group-hover:opacity-100 group-hover:bg-black group-hover:bg-opacity-40">
+                  <CiTrash />
+                </div>
+              )}
             </div>
           </button>
         ) : (
