@@ -110,7 +110,27 @@ export async function uploadMovie({ values }: { values: Movie }) {
 
 export async function getAllMovies() {
   try {
-    const allMovies = await prisma.movie.findMany({});
+    const allMovies = await prisma.movie.findMany({
+      include: {
+        cover: {
+          select: {
+            public_id: true,
+            secure_url: true,
+          },
+        },
+        director: {
+          select: {
+            id: true,
+          },
+        },
+        actors: {
+          select: {
+            id: true,
+          },
+        },
+        categories: true,
+      },
+    });
 
     return JSON.parse(JSON.stringify(allMovies));
   } catch (error: any) {
