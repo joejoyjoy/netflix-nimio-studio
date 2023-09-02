@@ -91,3 +91,26 @@ export async function deleteDirectorById(id: string) {
     throw new Error(`Failed by deleteDirectorById Fn(): ${error.message}`);
   }
 }
+
+export async function modifyDirector(id: string, values) {
+  try {
+    const validate = DirectorSchema.safeParse(values);
+
+    if (validate.success) {
+      await prisma.director.update({
+        where: {
+          id,
+        },
+        data: {
+          name: values.name,
+          born: Number(values.born),
+          bio: values.bio,
+        },
+      });
+    }
+
+    return JSON.parse(JSON.stringify(validate));
+  } catch (error: any) {
+    throw new Error(`Failed by modifyDirector Fn(): ${error.message}`);
+  }
+}

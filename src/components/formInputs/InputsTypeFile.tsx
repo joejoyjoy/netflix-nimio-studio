@@ -26,6 +26,7 @@ interface Props {
   pattern?: string | undefined;
   required: boolean;
   value: string;
+  values: InitialValue;
   onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 
@@ -42,8 +43,10 @@ export default function InputsTypeFile(props: Props) {
 }
 
 function InputTypeFile(props: { props: Props }) {
-  const { label, errorMessage, onChange, id, ...inputProps } = props.props;
-  const [imagePreview, setImagePreview] = useState<string>("");
+  const { label, errorMessage, onChange, id, values, ...inputProps } =
+    props.props;
+  const initialValue = values?.cover.secure_url ? values?.cover.secure_url : "";
+  const [imagePreview, setImagePreview] = useState<string>(initialValue);
 
   const handleFile = (e: FormEvent<HTMLInputElement>) => {
     const fileReader = new FileReader();
@@ -70,7 +73,7 @@ function InputTypeFile(props: { props: Props }) {
   return (
     <>
       <div>
-        {imagePreview ? (
+        {imagePreview || values?.cover.secure_url ? (
           <button
             type="button"
             onClick={handleFileDelete}
@@ -78,13 +81,13 @@ function InputTypeFile(props: { props: Props }) {
           >
             <div className="flex items-center w-full h-full overflow-hidden">
               <Image
-                src={imagePreview}
+                src={imagePreview || values?.cover.secure_url}
                 alt="profile icon"
                 width={288}
                 height={384}
                 className="block w-full h-hull object-cover rounded-sm"
                 placeholder="blur"
-                blurDataURL={imagePreview}
+                blurDataURL={imagePreview || values?.cover.secure_url}
                 priority
               />
               <div className="label-file-preview-form group-hover:opacity-100 group-hover:bg-black group-hover:bg-opacity-40">
@@ -105,7 +108,6 @@ function InputTypeFile(props: { props: Props }) {
               {...inputProps}
               id="product_image"
               accept="image/*"
-              placeholder="Add profile photo"
               className="hidden"
               value={undefined}
               onInput={(e) => handleFile(e)}

@@ -59,6 +59,7 @@ export default function FormComponent({
           key={input.id}
           {...input}
           value={valuesForBranch[input.name as keyof typeof valuesForBranch]}
+          values={values}
           onChange={onChange}
         />
       ))}

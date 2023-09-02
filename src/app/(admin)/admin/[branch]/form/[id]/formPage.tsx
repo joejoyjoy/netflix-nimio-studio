@@ -1,11 +1,12 @@
 "use client";
 
-import { FormEvent, useContext, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { uploadItemForm } from "@/lib/upload.actions";
+import { modifyItemForm } from "@/lib/modify.actions";
 import { ModalContext } from "@/context/ModalContext";
-import { initialValue } from "@/constants/admin";
+import { adminDataStructure, initialValue } from "@/constants/admin";
 import FormComponent from "@/components/FormComponent";
+import { transformToEditable } from "@/utils/transformToEditable";
 
 interface pageProps {
   params: { id: string; branch: string };
@@ -21,7 +22,9 @@ export default function EditItem({ params }: pageProps) {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await uploadItemForm({ values, branch });
+    console.log(values);
+
+    const response = await modifyItemForm({ id, values, branch });
     if (response.success === "NOT_FOUND") return;
     openModal(response);
     if (response.success) {
@@ -30,6 +33,33 @@ export default function EditItem({ params }: pageProps) {
       router.push(url);
     }
   };
+
+  useEffect(() => {
+    const getDataOfBranch = async () => {
+      const dataFn = adminDataStructure.find(
+        (item) => item.table === params.branch
+      );
+
+      if (!dataFn || typeof dataFn.content !== "function") {
+        console.error("Invalid content function or data function not found.");
+        return;
+      }
+
+      try {
+        const res = await dataFn.getById(params.id);
+
+        if (branch === "movie") {
+          const syncWithValues = transformToEditable(res);
+          setValues(syncWithValues);
+        } else {
+          setValues(res);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    getDataOfBranch();
+  }, []);
 
   return (
     <div className="max-w-[550px] mx-auto">

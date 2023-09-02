@@ -87,3 +87,24 @@ export async function deleteCategoryById(id: string) {
     throw new Error(`Failed by deleteCategoryById Fn(): ${error.message}`);
   }
 }
+
+export async function modifyCategory(id: string, values) {
+  try {
+    const validate = CategorySchema.safeParse(values);
+
+    if (validate.success) {
+      await prisma.category.update({
+        where: {
+          id,
+        },
+        data: {
+          name: values.name,
+        },
+      });
+    }
+
+    return JSON.parse(JSON.stringify(validate));
+  } catch (error: any) {
+    throw new Error(`Failed by modifyCategory Fn(): ${error.message}`);
+  }
+}

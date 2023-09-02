@@ -91,3 +91,26 @@ export async function deleteActorById(id: string) {
     throw new Error(`Failed by deleteActorById Fn(): ${error.message}`);
   }
 }
+
+export async function modifyActor(id: string, values) {
+  try {
+    const validate = ActorSchema.safeParse(values);
+
+    if (validate.success) {
+      await prisma.actor.update({
+        where: {
+          id,
+        },
+        data: {
+          name: values.name,
+          born: Number(values.born),
+          bio: values.bio,
+        },
+      });
+    }
+
+    return JSON.parse(JSON.stringify(validate));
+  } catch (error: any) {
+    throw new Error(`Failed by modifyActor Fn(): ${error.message}`);
+  }
+}

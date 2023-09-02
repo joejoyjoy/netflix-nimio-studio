@@ -30,7 +30,7 @@ interface Props {
   setValues: Dispatch<SetStateAction<InitialValue>>;
 }
 
-export default function InputsTypeCheckbox(props: Props) {
+export default function InputsTypeCheckboxEdit(props: Props) {
   const { label, errorMessage } = props;
 
   return (

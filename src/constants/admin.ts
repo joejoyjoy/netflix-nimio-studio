@@ -60,6 +60,7 @@ export const adminDataStructure = [
         id: 5,
         name: "cover",
         type: "file",
+        placeholder: "Add profile photo",
         errorMessage: "This field is required",
         label: "Upload cover of movie",
         required: true,

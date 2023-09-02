@@ -14,9 +14,15 @@ const MovieSchema = z.object({
     public_id: z.string().max(256).optional(),
     secure_url: z.string().max(256).optional(),
   }),
-  director: z.array(z.string()),
-  category: z.array(z.string()),
-  actor: z.array(z.string()),
+  director: z.array(z.string()).refine((arr) => arr.length === 1, {
+    message: "Select only one director",
+  }),
+  category: z.array(z.string()).refine((arr) => arr.length > 0, {
+    message: "Category checkbox must not be empty",
+  }),
+  actor: z.array(z.string()).refine((arr) => arr.length > 0, {
+    message: "Actor checkbox must not be empty",
+  }),
 });
 
 type Movie = z.infer<typeof MovieSchema>;
@@ -118,6 +124,29 @@ export async function getMovieById(id: string) {
       where: {
         id,
       },
+      include: {
+        cover: {
+          select: {
+            public_id: true,
+            secure_url: true,
+          },
+        },
+        director: {
+          select: {
+            id: true,
+          },
+        },
+        actors: {
+          select: {
+            id: true,
+          },
+        },
+        categories: {
+          select: {
+            id: true,
+          },
+        },
+      },
     });
 
     return JSON.parse(JSON.stringify(foundMovie));
@@ -139,5 +168,69 @@ export async function deleteMovieById(id: string) {
     return JSON.parse(JSON.stringify(deletedMovie));
   } catch (error: any) {
     throw new Error(`Failed by deleteMovieById Fn(): ${error.message}`);
+  }
+}
+
+export async function modifyMovie(id: string, values) {
+  try {
+    const validate = MovieSchema.safeParse(values);
+
+    if (validate.success) {
+      console.log(values);
+      console.log(values.actor);
+      console.log(values.category);
+
+      // Fetch the existing movie data
+      const existingMovie = await prisma.movie.findUnique({
+        where: {
+          id,
+        },
+        include: {
+          actors: true,
+          categories: true,
+        },
+      });
+
+      // Disconnect the existing actors and categories
+      const disconnectActors = existingMovie.actors.map((actor) => ({
+        id: actor.id,
+      }));
+      const disconnectCategories = existingMovie.categories.map((category) => ({
+        id: category.id,
+      }));
+
+      await prisma.movie.update({
+        where: {
+          id,
+        },
+        data: {
+          name: values.name,
+          overview: values.overview,
+          year: Number(values.year),
+          duration: Number(values.duration),
+          director: {
+            connect: {
+              id: values.director[0],
+            },
+          },
+          actors: {
+            disconnect: disconnectActors,
+            connect: values.actor.map((actorId) => ({
+              id: actorId,
+            })),
+          },
+          categories: {
+            disconnect: disconnectCategories,
+            connect: values.category.map((categoryId) => ({
+              id: categoryId,
+            })),
+          },
+        },
+      });
+    }
+
+    return JSON.parse(JSON.stringify(validate));
+  } catch (error: any) {
+    throw new Error(`Failed by modifyMovie Fn(): ${error.message}`);
   }
 }
