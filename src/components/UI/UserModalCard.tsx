@@ -75,6 +75,7 @@ export default function UserModalCard({ role }: { role?: string }) {
           width={36}
           height={36}
           className="rounded-full w-9 h-9 object-cover"
+          priority
         />
       </button>
       <section
@@ -100,6 +101,7 @@ export default function UserModalCard({ role }: { role?: string }) {
               width={48}
               height={48}
               className="rounded-full w-11 h-11 object-cover drop-shadow-md"
+              priority
             />
             <span>
               <p className="text-md">Hey, {user ? user?.name : "Guest"}!</p>

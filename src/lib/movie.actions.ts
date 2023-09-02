@@ -72,6 +72,16 @@ export async function uploadMovie({ values }: { values: Movie }) {
     return JSON.parse(JSON.stringify(validate));
   } catch (error: any) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === "P2000") {
+        console.error(
+          `Invalid data: ${error.meta.target[0].fieldNames.join(
+            ", "
+          )} is too long.`
+        );
+        // Display an error message to the user indicating the character limit exceeded
+      } else {
+        console.error("Prisma error:", error);
+      }
       if (error.code === "P2002") {
         const response = {
           success: false,
@@ -86,8 +96,9 @@ export async function uploadMovie({ values }: { values: Movie }) {
         };
         return response;
       }
+    } else {
+      console.error("Unexpected error:", error);
     }
-    throw new Error(`Failed by uploadMovie Fn(): ${error.message}`);
   }
 }
 
@@ -98,6 +109,20 @@ export async function getAllMovies() {
     return JSON.parse(JSON.stringify(allMovies));
   } catch (error: any) {
     throw new Error(`Failed by getAllMovies Fn(): ${error.message}`);
+  }
+}
+
+export async function getMovieById(id: string) {
+  try {
+    const foundMovie = await prisma.movie.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    return JSON.parse(JSON.stringify(foundMovie));
+  } catch (error: any) {
+    throw new Error(`Failed by getMovieById Fn(): ${error.message}`);
   }
 }
 

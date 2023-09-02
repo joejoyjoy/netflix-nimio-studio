@@ -66,7 +66,7 @@ model Director {
   id    String  @id @default(uuid())
   name  String  @unique
   born  Int
-  bio   String
+  bio   String  @db.Text
   Movie Movie[]
 }
 
@@ -74,7 +74,7 @@ model Actor {
   id     String  @id @default(uuid())
   name   String  @unique
   born   Int
-  bio    String
+  bio    String  @db.Text
   movies Movie[] @relation("MovieToActor")
 }
 
@@ -87,7 +87,7 @@ model Category {
 model Movie {
   id         String     @id @default(uuid())
   name       String     @unique
-  overview   String
+  overview   String     @db.Text
   year       Int
   duration   Int
   cover      Cover?

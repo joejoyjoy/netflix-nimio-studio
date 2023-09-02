@@ -57,10 +57,10 @@ export default function ViewAllItems({ params }: pageProps) {
       <>
         <h2 className="text-white text-2xl mb-6">All {branch}</h2>
         <div className="grid gap-4">
-          {Object.keys(itemData).map((item) => {
+          {Object.keys(itemData).map((item, index) => {
             return (
               <div
-                key={itemData[item].id}
+                key={index}
                 className="flex justify-between bg-slate-3 border border-slate-2 text-sm rounded-lg outline-none w-full"
               >
                 <div className="p-2.5">
@@ -72,9 +72,12 @@ export default function ViewAllItems({ params }: pageProps) {
                   </p>
                 </div>
                 <div className="flex text-gray-300">
-                  <button className="bg-green-900 bg-opacity-60  border border-slate-2 text-sm outline-none w-full py-2.5 px-5 min-w-[95px] hover:bg-opacity-100 transition duration-200">
+                  <Link
+                    href={`/admin/${branch}/form/${itemData[item].id}`}
+                    className="text-center bg-green-900 bg-opacity-60  border border-slate-2 text-sm outline-none w-full py-2.5 px-5 min-w-[95px] hover:bg-opacity-100 transition duration-200"
+                  >
                     Edit
-                  </button>
+                  </Link>
                   <button
                     onClick={() => handleDelete(itemData[item].id, branch)}
                     className="bg-red-900 bg-opacity-60 border border-slate-2 rounded-r-lg text-sm outline-none w-full py-2.5 px-5 min-w-[95px] hover:bg-opacity-100 transition duration-200"

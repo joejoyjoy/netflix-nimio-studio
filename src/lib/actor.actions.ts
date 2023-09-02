@@ -64,6 +64,20 @@ export async function getAllActors() {
   }
 }
 
+export async function getActorById(id: string) {
+  try {
+    const foundActor = await prisma.actor.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    return JSON.parse(JSON.stringify(foundActor));
+  } catch (error: any) {
+    throw new Error(`Failed by getActorById Fn(): ${error.message}`);
+  }
+}
+
 export async function deleteActorById(id: string) {
   try {
     const deletedActor = await prisma.actor.delete({

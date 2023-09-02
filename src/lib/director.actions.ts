@@ -64,6 +64,20 @@ export async function getAllDirectors() {
   }
 }
 
+export async function getDirectorById(id: string) {
+  try {
+    const foundDirector = await prisma.director.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    return JSON.parse(JSON.stringify(foundDirector));
+  } catch (error: any) {
+    throw new Error(`Failed by getDirectorById Fn(): ${error.message}`);
+  }
+}
+
 export async function deleteDirectorById(id: string) {
   try {
     const deletedDirector = await prisma.director.delete({

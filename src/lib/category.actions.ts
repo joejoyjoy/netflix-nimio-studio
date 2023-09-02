@@ -60,6 +60,20 @@ export async function getAllCategories() {
   }
 }
 
+export async function getCategoryById(id: string) {
+  try {
+    const foundCategory = await prisma.category.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    return JSON.parse(JSON.stringify(foundCategory));
+  } catch (error: any) {
+    throw new Error(`Failed by getCategoryById Fn(): ${error.message}`);
+  }
+}
+
 export async function deleteCategoryById(id: string) {
   try {
     const deletedCategory = await prisma.category.delete({

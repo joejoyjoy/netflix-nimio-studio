@@ -8,11 +8,11 @@ import { initialValue } from "@/constants/admin";
 import FormComponent from "@/components/FormComponent";
 
 interface pageProps {
-  params: { branch: string };
+  params: { id: string; branch: string };
 }
 
-export default function UploadItem({ params }: pageProps) {
-  const { branch } = params;
+export default function EditItem({ params }: pageProps) {
+  const { branch, id } = params;
   const [values, setValues] = useState(
     initialValue[branch as keyof typeof initialValue]
   );
@@ -34,7 +34,7 @@ export default function UploadItem({ params }: pageProps) {
   return (
     <div className="max-w-[550px] mx-auto">
       <form onSubmit={handleSubmit} className="flex flex-col justify-center">
-        <h2 className="text-xl text-white mb-6">Upload {branch}</h2>
+        <h2 className="text-xl text-white mb-6">Edit {branch}</h2>
         <FormComponent params={params} values={values} setValues={setValues} />
         <button className="button-primary mx-auto mt-6">Submit</button>
       </form>

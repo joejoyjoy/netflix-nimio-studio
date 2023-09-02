@@ -1,13 +1,17 @@
-import { getAllMovies } from "@/lib/movie.actions";
-import { getAllDirectors } from "@/lib/director.actions";
-import { getAllCategories } from "@/lib/category.actions";
-import { getAllActors } from "@/lib/actor.actions";
+import { getAllMovies, getMovieById } from "@/lib/movie.actions";
+import { getAllDirectors, getDirectorById } from "@/lib/director.actions";
+import { getAllCategories, getCategoryById } from "@/lib/category.actions";
+import { getActorById, getAllActors } from "@/lib/actor.actions";
 
 export const adminDataStructure = [
   {
     table: "movie",
     content: async function () {
       const res = await getAllMovies();
+      return res;
+    },
+    getById: async function (id: string) {
+      const res = await getMovieById(id);
       return res;
     },
     inputs: [
@@ -95,6 +99,10 @@ export const adminDataStructure = [
       const res = await getAllDirectors();
       return res;
     },
+    getById: async function (id: string) {
+      const res = await getDirectorById(id);
+      return res;
+    },
     inputs: [
       {
         id: 1,
@@ -135,6 +143,10 @@ export const adminDataStructure = [
       const res = await getAllCategories();
       return res;
     },
+    getById: async function (id: string) {
+      const res = await getCategoryById(id);
+      return res;
+    },
     inputs: [
       {
         id: 1,
@@ -152,6 +164,10 @@ export const adminDataStructure = [
     table: "actor",
     content: async function () {
       const res = await getAllActors();
+      return res;
+    },
+    getById: async function (id: string) {
+      const res = await getActorById(id);
       return res;
     },
     inputs: [
