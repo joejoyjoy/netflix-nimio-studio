@@ -41,6 +41,8 @@ export default function ViewAllItems({ params }: pageProps) {
         <h2 className="text-white text-2xl mb-6">All {branch}</h2>
         <div className="grid gap-4">
           {Object.keys(branchContent).map((item, index) => {
+            // @ts-ignore
+            const contentItem = branchContent[item];
             return (
               <div
                 key={index}
@@ -50,19 +52,19 @@ export default function ViewAllItems({ params }: pageProps) {
                   <p className="text-gray-5">
                     Name:{" "}
                     <b className="font-normal text-gray-300">
-                      {branchContent[item].name}
+                      {contentItem.name}
                     </b>
                   </p>
                 </div>
                 <div className="flex text-gray-300">
                   <Link
-                    href={`/admin/${branch}/form/${branchContent[item].id}`}
+                    href={`/admin/${branch}/form/${contentItem.id}`}
                     className="text-center bg-green-900 bg-opacity-60  border border-slate-2 text-sm outline-none w-full py-2.5 px-5 min-w-[95px] hover:bg-opacity-100 transition duration-200"
                   >
                     Edit
                   </Link>
                   <button
-                    onClick={() => handleDelete(branchContent[item].id, branch)}
+                    onClick={() => handleDelete(contentItem.id, branch)}
                     className="bg-red-900 bg-opacity-60 border border-slate-2 rounded-r-lg text-sm outline-none w-full py-2.5 px-5 min-w-[95px] hover:bg-opacity-100 transition duration-200"
                   >
                     Delete
