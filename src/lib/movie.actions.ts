@@ -78,16 +78,6 @@ export async function uploadMovie({ values }: { values: Movie }) {
     return JSON.parse(JSON.stringify(validate));
   } catch (error: any) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      if (error.code === "P2000") {
-        console.error(
-          `Invalid data: ${error.meta.target[0].fieldNames.join(
-            ", "
-          )} is too long.`
-        );
-        // Display an error message to the user indicating the character limit exceeded
-      } else {
-        console.error("Prisma error:", error);
-      }
       if (error.code === "P2002") {
         const response = {
           success: false,
@@ -110,6 +100,16 @@ export async function uploadMovie({ values }: { values: Movie }) {
 
 export async function getAllMovies() {
   try {
+    const allMovies = await prisma.movie.findMany({});
+
+    return JSON.parse(JSON.stringify(allMovies));
+  } catch (error: any) {
+    throw new Error(`Failed by getAllMovies Fn(): ${error.message}`);
+  }
+}
+
+export async function getAllMoviesAndInclude() {
+  try {
     const allMovies = await prisma.movie.findMany({
       include: {
         cover: {
@@ -118,23 +118,13 @@ export async function getAllMovies() {
             secure_url: true,
           },
         },
-        director: {
-          select: {
-            id: true,
-          },
-        },
-        actors: {
-          select: {
-            id: true,
-          },
-        },
         categories: true,
       },
     });
 
     return JSON.parse(JSON.stringify(allMovies));
   } catch (error: any) {
-    throw new Error(`Failed by getAllMovies Fn(): ${error.message}`);
+    throw new Error(`Failed by getAllMoviesAndInclude Fn(): ${error.message}`);
   }
 }
 
@@ -183,7 +173,6 @@ export async function deleteMovieById(id: string) {
       },
       include: { cover: true },
     });
-    console.log(deletedMovie);
 
     return JSON.parse(JSON.stringify(deletedMovie));
   } catch (error: any) {
@@ -196,11 +185,6 @@ export async function modifyMovie(id: string, values) {
     const validate = MovieSchema.safeParse(values);
 
     if (validate.success) {
-      console.log(values);
-      console.log(values.actor);
-      console.log(values.category);
-
-      // Fetch the existing movie data
       const existingMovie = await prisma.movie.findUnique({
         where: {
           id,
@@ -211,7 +195,6 @@ export async function modifyMovie(id: string, values) {
         },
       });
 
-      // Disconnect the existing actors and categories
       const disconnectActors = existingMovie.actors.map((actor) => ({
         id: actor.id,
       }));

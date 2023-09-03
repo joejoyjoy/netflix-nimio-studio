@@ -1,20 +1,4 @@
-import {
-  ChangeEvent,
-  Dispatch,
-  FocusEvent,
-  FormEvent,
-  SetStateAction,
-  Suspense,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import Image from "next/image";
-import { PiPlus } from "react-icons/pi";
-import { CiTrash } from "react-icons/ci";
-import { getAllDirectors } from "@/lib/director.actions";
-import { getAllCategories } from "@/lib/category.actions";
-import { getAllActors } from "@/lib/actor.actions";
+import { ChangeEvent, Suspense, useState } from "react";
 
 interface Props {
   id: number;

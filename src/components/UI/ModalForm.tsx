@@ -10,7 +10,7 @@ export default function ModalForm() {
 
   return (
     <div
-      className={`absolute inset-0 ${
+      className={`fixed inset-0 ${
         isModalOpen ? "flex" : "hidden"
       } items-center justify-center z-30 bg-black bg-opacity-70`}
     >

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { adminDataStructure } from "@/constants/admin";
 import { AuthContext } from "@/context/AuthContext";
 import EditItem from "./formPage";
+import useGetBranchDataById from "@/hooks/useGetBranchDataById";
 
 interface pageProps {
   params: { id: string; branch: string };
@@ -13,32 +14,7 @@ interface pageProps {
 export default function EditItemLayout({ params }: pageProps) {
   const { isLoading } = useContext(AuthContext);
   const [paramsExist, setParamsExist] = useState(false);
-  const [idExist, setIdExist] = useState(false);
-
-  useEffect(() => {
-    const getDataOfBranch = async () => {
-      const dataFn = adminDataStructure.find(
-        (item) => item.table === params.branch
-      );
-
-      if (!dataFn || typeof dataFn.content !== "function") {
-        console.error("Invalid content function or data function not found.");
-        return;
-      }
-
-      try {
-        const res = await dataFn.getById(params.id);
-        if (res !== null) {
-          setIdExist(true);
-        } else {
-          setIdExist(false);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    getDataOfBranch();
-  }, []);
+  const { idExist } = useGetBranchDataById(params.branch, params.id);
 
   useEffect(() => {
     const onParams = () => {

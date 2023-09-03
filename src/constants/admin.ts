@@ -1,16 +1,28 @@
-import { getAllMovies, getMovieById } from "@/lib/movie.actions";
-import { getAllDirectors, getDirectorById } from "@/lib/director.actions";
-import { getAllCategories, getCategoryById } from "@/lib/category.actions";
-import { getActorById, getAllActors } from "@/lib/actor.actions";
+import { getAllMovies, getMovieById, uploadMovie } from "@/lib/movie.actions";
+import {
+  getAllDirectors,
+  getDirectorById,
+  uploadDirector,
+} from "@/lib/director.actions";
+import {
+  getAllCategories,
+  getCategoryById,
+  uploadCategory,
+} from "@/lib/category.actions";
+import { getActorById, getAllActors, uploadActor } from "@/lib/actor.actions";
 
 export const adminDataStructure = [
   {
     table: "movie",
-    content: async function () {
+    uploadBranchData: async function (values: any) {
+      const res = await uploadMovie({ values });
+      return res;
+    },
+    getBranchData: async function () {
       const res = await getAllMovies();
       return res;
     },
-    getById: async function (id: string) {
+    getBranchDataById: async function (id: string) {
       const res = await getMovieById(id);
       return res;
     },
@@ -96,11 +108,15 @@ export const adminDataStructure = [
   },
   {
     table: "director",
-    content: async function () {
+    uploadBranchData: async function (values: any) {
+      const res = await uploadDirector({ values });
+      return res;
+    },
+    getBranchData: async function () {
       const res = await getAllDirectors();
       return res;
     },
-    getById: async function (id: string) {
+    getBranchDataById: async function (id: string) {
       const res = await getDirectorById(id);
       return res;
     },
@@ -140,11 +156,15 @@ export const adminDataStructure = [
   },
   {
     table: "category",
-    content: async function () {
+    uploadBranchData: async function (values: any) {
+      const res = await uploadCategory({ values });
+      return res;
+    },
+    getBranchData: async function () {
       const res = await getAllCategories();
       return res;
     },
-    getById: async function (id: string) {
+    getBranchDataById: async function (id: string) {
       const res = await getCategoryById(id);
       return res;
     },
@@ -163,11 +183,15 @@ export const adminDataStructure = [
   },
   {
     table: "actor",
-    content: async function () {
+    uploadBranchData: async function (values: any) {
+      const res = await uploadActor({ values });
+      return res;
+    },
+    getBranchData: async function () {
       const res = await getAllActors();
       return res;
     },
-    getById: async function (id: string) {
+    getBranchDataById: async function (id: string) {
       const res = await getActorById(id);
       return res;
     },

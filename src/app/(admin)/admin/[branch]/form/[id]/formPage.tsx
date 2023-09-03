@@ -1,12 +1,12 @@
 "use client";
 
-import { FormEvent, useContext, useEffect, useState } from "react";
+import { FormEvent, useContext } from "react";
 import { useRouter } from "next/navigation";
 import { modifyItemForm } from "@/lib/modify.actions";
 import { ModalContext } from "@/context/ModalContext";
-import { adminDataStructure, initialValue } from "@/constants/admin";
+import { initialValue } from "@/constants/admin";
 import FormComponent from "@/components/FormComponent";
-import { transformToEditable } from "@/utils/transformToEditable";
+import useGetBranchDataById from "@/hooks/useGetBranchDataById";
 
 interface pageProps {
   params: { id: string; branch: string };
@@ -14,16 +14,12 @@ interface pageProps {
 
 export default function EditItem({ params }: pageProps) {
   const { branch, id } = params;
-  const [values, setValues] = useState(
-    initialValue[branch as keyof typeof initialValue]
-  );
+  const { values, setValues } = useGetBranchDataById(branch, id);
   const { openModal } = useContext(ModalContext);
   const router = useRouter();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(values);
-
     const response = await modifyItemForm({ id, values, branch });
     if (response.success === "NOT_FOUND") return;
     openModal(response);
@@ -33,33 +29,6 @@ export default function EditItem({ params }: pageProps) {
       router.push(url);
     }
   };
-
-  useEffect(() => {
-    const getDataOfBranch = async () => {
-      const dataFn = adminDataStructure.find(
-        (item) => item.table === params.branch
-      );
-
-      if (!dataFn || typeof dataFn.content !== "function") {
-        console.error("Invalid content function or data function not found.");
-        return;
-      }
-
-      try {
-        const res = await dataFn.getById(params.id);
-
-        if (branch === "movie") {
-          const syncWithValues = transformToEditable(res);
-          setValues(syncWithValues);
-        } else {
-          setValues(res);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    getDataOfBranch();
-  }, []);
 
   return (
     <div className="max-w-[550px] mx-auto">

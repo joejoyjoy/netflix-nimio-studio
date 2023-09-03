@@ -2,10 +2,10 @@
 
 import { FormEvent, useContext, useState } from "react";
 import { useRouter } from "next/navigation";
-import { uploadItemForm } from "@/lib/upload.actions";
 import { ModalContext } from "@/context/ModalContext";
-import { initialValue } from "@/constants/admin";
 import FormComponent from "@/components/FormComponent";
+import { initialValue } from "@/constants/admin";
+import useUploadBranchData from "@/hooks/useUploadBranchData";
 
 interface pageProps {
   params: { branch: string };
@@ -20,11 +20,14 @@ export default function UploadItem({ params }: pageProps) {
   const router = useRouter();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    const { uploadData } = useUploadBranchData(branch, values);
     e.preventDefault();
-    const response = await uploadItemForm({ values, branch });
-    if (response.success === "NOT_FOUND") return;
-    openModal(response);
-    if (response.success) {
+
+    const res = await uploadData();
+
+    if (res.success === "NOT_FOUND") return;
+    openModal(res);
+    if (res.success) {
       const url = "/admin/" + branch;
       setValues(initialValue[branch as keyof typeof initialValue]);
       router.push(url);

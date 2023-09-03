@@ -1,8 +1,10 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { adminDataStructure, initialValue } from "@/constants/admin";
+import { adminDataStructure } from "@/constants/admin";
 import { deleteItemById } from "@/lib/delete.actions";
+import useGetBranchContent from "@/hooks/useGetBranchContent";
 
 interface pageProps {
   params: { branch: string };
@@ -11,35 +13,13 @@ interface pageProps {
 export default function ViewAllItems({ params }: pageProps) {
   const { branch } = params;
   const [paramsExist, setParamsExist] = useState(false);
-  const [itemData, setItemData] = useState(
-    initialValue[branch as keyof typeof initialValue]
-  );
+  const { branchContent, setBranchContent } = useGetBranchContent(branch);
 
   const handleDelete = async (id: string, branch: string) => {
     const res = await deleteItemById({ id, branch });
-    const deleteFromState = itemData.filter((item) => item.id !== res.id);
-    setItemData(deleteFromState);
+    const deleteFromState = branchContent.filter((item) => item.id !== res.id);
+    setBranchContent(deleteFromState);
   };
-
-  useEffect(() => {
-    const getDataOfBranch = async () => {
-      const dataFn = adminDataStructure.find((item) => item.table === branch);
-
-      if (!dataFn || typeof dataFn.content !== "function") {
-        console.error("Invalid content function or data function not found.");
-        return;
-      }
-
-      try {
-        const res = await dataFn.content();
-        console.log(res);
-        setItemData(res);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    getDataOfBranch();
-  }, []);
 
   useEffect(() => {
     const onParams = () => {
@@ -57,7 +37,7 @@ export default function ViewAllItems({ params }: pageProps) {
       <>
         <h2 className="text-white text-2xl mb-6">All {branch}</h2>
         <div className="grid gap-4">
-          {Object.keys(itemData).map((item, index) => {
+          {Object.keys(branchContent).map((item, index) => {
             return (
               <div
                 key={index}
@@ -67,19 +47,19 @@ export default function ViewAllItems({ params }: pageProps) {
                   <p className="text-gray-5">
                     Name:{" "}
                     <b className="font-normal text-gray-300">
-                      {itemData[item].name}
+                      {branchContent[item].name}
                     </b>
                   </p>
                 </div>
                 <div className="flex text-gray-300">
                   <Link
-                    href={`/admin/${branch}/form/${itemData[item].id}`}
+                    href={`/admin/${branch}/form/${branchContent[item].id}`}
                     className="text-center bg-green-900 bg-opacity-60  border border-slate-2 text-sm outline-none w-full py-2.5 px-5 min-w-[95px] hover:bg-opacity-100 transition duration-200"
                   >
                     Edit
                   </Link>
                   <button
-                    onClick={() => handleDelete(itemData[item].id, branch)}
+                    onClick={() => handleDelete(branchContent[item].id, branch)}
                     className="bg-red-900 bg-opacity-60 border border-slate-2 rounded-r-lg text-sm outline-none w-full py-2.5 px-5 min-w-[95px] hover:bg-opacity-100 transition duration-200"
                   >
                     Delete

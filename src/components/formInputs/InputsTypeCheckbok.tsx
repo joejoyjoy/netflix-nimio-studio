@@ -1,20 +1,5 @@
-import {
-  ChangeEvent,
-  Dispatch,
-  FocusEvent,
-  FormEvent,
-  SetStateAction,
-  Suspense,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import Image from "next/image";
-import { PiPlus } from "react-icons/pi";
-import { CiTrash } from "react-icons/ci";
-import { getAllDirectors } from "@/lib/director.actions";
-import { getAllCategories } from "@/lib/category.actions";
-import { getAllActors } from "@/lib/actor.actions";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import useGetBranchContent from "@/hooks/useGetBranchContent";
 
 interface Props {
   id: number;
@@ -45,38 +30,9 @@ export default function InputsTypeCheckbox(props: Props) {
 function DropdownSelector(props: { props: Props }) {
   const { label, errorMessage, values, setValues, id, ...inputProps } =
     props.props;
-  const [allItems, setAllItems] = useState([]);
+  const { branchContent } = useGetBranchContent(inputProps.name);
   const [popperOpen, setPopperOpen] = useState<boolean>(false);
   let popperRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    const handler = (e: any) => {
-      if (popperRef.current != null) {
-        if (!popperRef.current.contains(e.target)) {
-          setPopperOpen(false);
-        }
-      }
-    };
-    document.addEventListener("mousedown", handler);
-    return () => {
-      document.removeEventListener("mousedown", handler);
-    };
-  }, []);
-
-  const getDirectors = async () => {
-    const res = await getAllDirectors();
-    setAllItems(res);
-  };
-
-  const getCategories = async () => {
-    const res = await getAllCategories();
-    setAllItems(res);
-  };
-
-  const getActors = async () => {
-    const res = await getAllActors();
-    setAllItems(res);
-  };
 
   const checkIfTrue = (id: string) => {
     const currentValue = values[inputProps.name] || [];
@@ -101,15 +57,17 @@ function DropdownSelector(props: { props: Props }) {
   };
 
   useEffect(() => {
-    if (inputProps.name === "director") {
-      getDirectors();
-    }
-    if (inputProps.name === "category") {
-      getCategories();
-    }
-    if (inputProps.name === "actor") {
-      getActors();
-    }
+    const handler = (e: any) => {
+      if (popperRef.current != null) {
+        if (!popperRef.current.contains(e.target)) {
+          setPopperOpen(false);
+        }
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
   }, []);
 
   return (
@@ -125,7 +83,7 @@ function DropdownSelector(props: { props: Props }) {
       </button>
       {popperOpen && (
         <div className="absolute top-12 max-w-[550px] max-h-[260px] form-input-checkbox overflow-y-auto p-0 z-10">
-          {allItems.map((item) => (
+          {branchContent.map((item) => (
             <div
               key={item.id}
               className={`border-b border-gray-600 last:border-b-0 p-4 hover:bg-slate-2 ${
@@ -136,10 +94,10 @@ function DropdownSelector(props: { props: Props }) {
                 <input
                   id={`input-${item.id}`}
                   type="checkbox"
-                  onChange={(e) => handleChange(item.id)}
+                  onChange={() => handleChange(item.id)}
                   checked={checkIfTrue(item.id)}
                   required
-                  className="form-input-checkbox-icon  "
+                  className="form-input-checkbox-icon"
                 />
                 <label
                   htmlFor={`input-${item.id}`}

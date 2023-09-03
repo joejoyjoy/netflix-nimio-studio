@@ -16,7 +16,7 @@ export default function ProtectedRoute({
     return <Loader />;
   }
 
-  if (!isLoggedIn || !user?.role) {
+  if (!isLoggedIn || user?.role !== "ADMIN") {
     redirect("/");
   }
 
