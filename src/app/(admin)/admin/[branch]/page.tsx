@@ -43,6 +43,7 @@ export default function ViewAllItems({ params }: pageProps) {
           {Object.keys(branchContent).map((item, index) => {
             // @ts-ignore
             const contentItem = branchContent[item];
+
             return (
               <div
                 key={index}
@@ -73,6 +74,11 @@ export default function ViewAllItems({ params }: pageProps) {
               </div>
             );
           })}
+          {branchContent.length === 0 && (
+            <div className="my-8">
+              <p className="text-center">No data found, please upload first!</p>
+            </div>
+          )}
         </div>
       </>
     );

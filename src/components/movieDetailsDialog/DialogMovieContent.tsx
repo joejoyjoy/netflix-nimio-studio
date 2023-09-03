@@ -91,15 +91,6 @@ export default function DialogMovieContent({
             {actors.map((actor) => (
               <PersonCard key={actor.id} data={actor} />
             ))}
-            {actors.map((actor) => (
-              <PersonCard key={actor.id} data={actor} />
-            ))}
-            {actors.map((actor) => (
-              <PersonCard key={actor.id} data={actor} />
-            ))}
-            {actors.map((actor) => (
-              <PersonCard key={actor.id} data={actor} />
-            ))}
           </div>
         </div>
       </section>

@@ -176,6 +176,10 @@ export async function deleteMovieById(id: string) {
       include: { cover: true },
     });
 
+    if (deletedMovie.cover !== null) {
+      deletePhotoOfCloudinary(deletedMovie.cover.public_id);
+    }
+
     return JSON.parse(JSON.stringify(deletedMovie));
   } catch (error: any) {
     throw new Error(`Failed by deleteMovieById Fn(): ${error.message}`);
