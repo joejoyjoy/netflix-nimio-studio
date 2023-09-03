@@ -28,15 +28,17 @@ export default function Header({ role }: { role: string }) {
     <header className="responsive border-b-[2px] border-slate-3">
       <div className="responsive_wrapper flex items-center justify-between">
         <h1 className="">
-          <Link href={"/"}>MOVEA</Link>
+          <Link href={role === "ADMIN" ? "/admin/movie" : "/"}>
+            MOVEA{role === "ADMIN" ? <b className="font-thin">admin</b> : ""}
+          </Link>
         </h1>
-        <nav className="flex gap-12 px-6">
+        <nav className="flex gap-12 px-6 lg:[&>*:nth-child(n+3)]:hidden md:[&>*:nth-child(n+3)]:hidden sm:[&>*:nth-child(n+2)]:hidden">
           {links().map((link, index) => {
             return (
               <Link
                 key={index}
                 href={link.url}
-                className={`whitespace-nowrap ${activeLink(
+                className={`inline whitespace-nowrap ${activeLink(
                   link.url,
                   currentPath
                 )}`}

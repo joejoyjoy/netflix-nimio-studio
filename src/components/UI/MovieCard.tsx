@@ -7,7 +7,7 @@ import { FaPlay } from "react-icons/fa";
 
 export default function MovieCard({ data }) {
   return (
-    <div className="relative w-full aspect-[3/4] overflow-hidden rounded-2xl">
+    <div className="relative w-full aspect-[3/4] bg-slate-3 overflow-hidden rounded-2xl">
       <Image
         src={downScaleImage(data.cover.secure_url)}
         alt={data.name}

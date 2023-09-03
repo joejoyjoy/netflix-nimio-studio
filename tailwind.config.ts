@@ -78,6 +78,15 @@ const config: Config = {
 
       desktop: "1280px",
       // => @media (min-width: 1280px) { ... }
+
+      lg: { max: "750px" },
+      // => @media (max-width: 750px) { ... }
+
+      md: { max: "600px" },
+      // => @media (max-width: 600px) { ... }
+
+      sm: { max: "450px" },
+      // => @media (max-width: 450px) { ... }
     },
   },
   plugins: [],

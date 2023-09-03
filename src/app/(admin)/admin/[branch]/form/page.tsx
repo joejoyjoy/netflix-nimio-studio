@@ -5,6 +5,7 @@ import Link from "next/link";
 import { adminDataStructure } from "@/constants/admin";
 import { AuthContext } from "@/context/AuthContext";
 import UploadItem from "./formPage";
+import Loader from "@/components/UI/Loader";
 
 interface pageProps {
   params: { branch: string };
@@ -25,7 +26,11 @@ export default function FormPageLayout({ params }: pageProps) {
     onParams();
   }, [paramsExist]);
 
-  if (!isLoading && !paramsExist) {
+  if (!isLoading) {
+    <Loader />;
+  }
+
+  if (!paramsExist) {
     return (
       <div className="flex flex-col items-center gap-6 my-6">
         <h2 className="text-3xl uppercase text-center">404 - Page not found</h2>
