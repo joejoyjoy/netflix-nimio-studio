@@ -118,7 +118,9 @@ export async function getAllMoviesAndInclude() {
             secure_url: true,
           },
         },
+        director: true,
         categories: true,
+        actors: true,
       },
     });
 

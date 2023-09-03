@@ -1,29 +1,58 @@
 import React from "react";
 import Image from "next/image";
 import { downScaleImage } from "@/utils/downScaleImage";
+import { minutesToHours } from "@/utils/minutesToHours";
+import { categoriesToString } from "@/utils/categoriesToString";
 
 export default function DialogMovieContent({
   data,
 }: {
   data: MovieIncludeCategory;
 }) {
-  console.log(data);
+  const { name, cover, overview, year, duration, categories } = data;
 
   return (
     <div className="p-8 w-full max-h-[calc(100vh-66px)] overflow-y-auto overflow-hidden">
-      <div className="grid grid-cols-6 gap-4">
-        <div className="relative w-full aspect-[3/4] bg-slate-2 overflow-hidden rounded-sm">
+      <div className="grid grid-cols-[auto,1fr] gap-4">
+        <div className="relative  w-48 aspect-[3/4] bg-slate-2 overflow-hidden rounded-sm">
           <Image
-            src={downScaleImage(data.cover.secure_url)}
-            alt={data.name}
+            src={downScaleImage(cover.secure_url)}
+            alt={name}
             className="object-cover"
             fill={true}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 50vw"
             priority
           />
         </div>
-        <div className="col-span-5">
-          <h3>{data.name}</h3>
+        <div className="flex flex-col justify-center gap-3">
+          <div>
+            <p>Name</p>
+            <h3 className="text-lg text-white line-clamp-1">{name}</h3>
+          </div>
+          <div>
+            <p>Overview</p>
+            <h3 className="text-sm text-white font-light line-clamp-4">
+              {overview}
+            </h3>
+          </div>
+          <div className="flex gap-8">
+            <span>
+              <p>Year</p>
+              <h3 className="text-lg text-white font-normal">{year}</h3>
+            </span>
+            <span>
+              <p>Duration</p>
+              <h3 className="text-lg text-white font-normal">
+                {minutesToHours(duration)}
+              </h3>
+            </span>
+            <span>
+              <p>Category</p>
+              <h3 className="text-lg text-white font-normal line-clamp-1">
+                {categoriesToString(categories)}
+              </h3>
+            </span>
+          </div>
         </div>
       </div>
       <h3>
