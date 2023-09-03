@@ -59,12 +59,16 @@ function InputTypeFile(props: { props: Props }) {
 
   return (
     <>
-      <div>
+      <div
+        className={`${values?.cover.secure_url ? "cursor-not-allowed" : ""}`}
+      >
         {imagePreview || values?.cover.secure_url ? (
           <button
             type="button"
             onClick={handleFileDelete}
-            className="relative label-file-form group overflow-hidden p-3"
+            className={`relative label-file-form group overflow-hidden p-3 ${
+              values?.cover.secure_url ? "pointer-events-none" : ""
+            }`}
           >
             <div className="flex items-center w-full h-full overflow-hidden">
               <Image

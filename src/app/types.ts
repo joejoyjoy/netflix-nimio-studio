@@ -36,3 +36,22 @@ type InitialValue =
       born: number;
       bio: string;
     };
+
+interface MovieIncludeCategory {
+  id: string;
+  name: string;
+  overview: string;
+  year: number;
+  duration: number;
+  cover: {
+    secure_url: string;
+  };
+  categories: [
+    {
+      name: string;
+    },
+    {
+      name: string;
+    }
+  ];
+}

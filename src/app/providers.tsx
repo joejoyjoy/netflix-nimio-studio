@@ -4,6 +4,7 @@ import React from "react";
 import { SessionProvider } from "next-auth/react";
 import AuthProvider from "@/context/AuthContext";
 import ModalProvider from "@/context/ModalContext";
+import DialogProvider from "@/context/DialogContext";
 
 export default function ProvidersComponent({
   children,
@@ -13,7 +14,9 @@ export default function ProvidersComponent({
   return (
     <SessionProvider>
       <AuthProvider>
-        <ModalProvider>{children}</ModalProvider>
+        <ModalProvider>
+          <DialogProvider>{children}</DialogProvider>
+        </ModalProvider>
       </AuthProvider>
     </SessionProvider>
   );

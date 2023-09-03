@@ -58,6 +58,14 @@
     checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent;
   }
 
+  /*** MOVIE DETAILS DIALOG STYLES ***/
+  .movie-dialog-content {
+    @apply absolute top-11 left-36 right-36 bg-slate-5 rounded-l-2xl z-20;
+  }
+  .movie-dialog-backdrop {
+    @apply fixed inset-0 w-full h-full bg-black/70 z-20;
+  }
+
   /*** SPECIFIC STYLE CLASSES ***/
   .popper-active {
     @apply opacity-100 pointer-events-auto -translate-y-2 transition duration-200;
@@ -77,4 +85,25 @@
   .button-primary {
     @apply bg-orange-5 text-white text-center py-3 px-8 rounded-full hover:bg-opacity-70 transition duration-300;
   }
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #424242;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #686868;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
 }

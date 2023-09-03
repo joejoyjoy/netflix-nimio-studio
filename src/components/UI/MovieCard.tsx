@@ -1,13 +1,20 @@
 "use client";
 
+import { useContext } from "react";
 import Image from "next/image";
 import { downScaleImage } from "@/utils/downScaleImage";
 import { minutesToHours } from "@/utils/minutesToHours";
 import { FaPlay } from "react-icons/fa";
+import { DialogContext } from "@/context/DialogContext";
 
-export default function MovieCard({ data }) {
+export default function MovieCard({ data }: { data: MovieIncludeCategory }) {
+  const { openMovieDialog } = useContext(DialogContext);
+
   return (
-    <div className="relative w-full aspect-[3/4] bg-slate-3 overflow-hidden rounded-2xl">
+    <div
+      onClick={() => openMovieDialog(data)}
+      className="relative w-full aspect-[3/4] bg-slate-3 overflow-hidden rounded-2xl cursor-pointer"
+    >
       <Image
         src={downScaleImage(data.cover.secure_url)}
         alt={data.name}
