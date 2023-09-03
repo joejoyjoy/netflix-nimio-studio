@@ -88,7 +88,7 @@ export async function deleteCategoryById(id: string) {
   }
 }
 
-export async function modifyCategory(id: string, values) {
+export async function modifyCategory(id: string, values: any) {
   try {
     const validate = CategorySchema.safeParse(values);
 

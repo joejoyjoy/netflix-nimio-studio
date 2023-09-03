@@ -92,7 +92,7 @@ export async function deleteActorById(id: string) {
   }
 }
 
-export async function modifyActor(id: string, values) {
+export async function modifyActor(id: string, values: any) {
   try {
     const validate = ActorSchema.safeParse(values);
 

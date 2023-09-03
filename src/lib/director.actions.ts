@@ -92,7 +92,7 @@ export async function deleteDirectorById(id: string) {
   }
 }
 
-export async function modifyDirector(id: string, values) {
+export async function modifyDirector(id: string, values: any) {
   try {
     const validate = DirectorSchema.safeParse(values);
 

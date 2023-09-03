@@ -1,15 +1,31 @@
-import { getAllMovies, getMovieById, uploadMovie } from "@/lib/movie.actions";
 import {
+  deleteMovieById,
+  getAllMovies,
+  getMovieById,
+  modifyMovie,
+  uploadMovie,
+} from "@/lib/movie.actions";
+import {
+  deleteDirectorById,
   getAllDirectors,
   getDirectorById,
+  modifyDirector,
   uploadDirector,
 } from "@/lib/director.actions";
 import {
+  deleteCategoryById,
   getAllCategories,
   getCategoryById,
+  modifyCategory,
   uploadCategory,
 } from "@/lib/category.actions";
-import { getActorById, getAllActors, uploadActor } from "@/lib/actor.actions";
+import {
+  deleteActorById,
+  getActorById,
+  getAllActors,
+  modifyActor,
+  uploadActor,
+} from "@/lib/actor.actions";
 
 export const adminDataStructure = [
   {
@@ -24,6 +40,14 @@ export const adminDataStructure = [
     },
     getBranchDataById: async function (id: string) {
       const res = await getMovieById(id);
+      return res;
+    },
+    modifyBranchData: async function (id: string, values: any) {
+      const res = await modifyMovie(id, values);
+      return res;
+    },
+    deleteBranchItem: async function (id: string) {
+      const res = await deleteMovieById(id);
       return res;
     },
     inputs: [
@@ -120,6 +144,14 @@ export const adminDataStructure = [
       const res = await getDirectorById(id);
       return res;
     },
+    modifyBranchData: async function (id: string, values: any) {
+      const res = await modifyDirector(id, values);
+      return res;
+    },
+    deleteBranchItem: async function (id: string) {
+      const res = await deleteDirectorById(id);
+      return res;
+    },
     inputs: [
       {
         id: 1,
@@ -168,6 +200,14 @@ export const adminDataStructure = [
       const res = await getCategoryById(id);
       return res;
     },
+    modifyBranchData: async function (id: string, values: any) {
+      const res = await modifyCategory(id, values);
+      return res;
+    },
+    deleteBranchItem: async function (id: string) {
+      const res = await deleteCategoryById(id);
+      return res;
+    },
     inputs: [
       {
         id: 1,
@@ -193,6 +233,14 @@ export const adminDataStructure = [
     },
     getBranchDataById: async function (id: string) {
       const res = await getActorById(id);
+      return res;
+    },
+    modifyBranchData: async function (id: string, values: any) {
+      const res = await modifyActor(id, values);
+      return res;
+    },
+    deleteBranchItem: async function (id: string) {
+      const res = await deleteActorById(id);
       return res;
     },
     inputs: [

@@ -2,11 +2,11 @@
 
 import { FormEvent, useContext } from "react";
 import { useRouter } from "next/navigation";
-import { modifyItemForm } from "@/lib/modify.actions";
+import useGetBranchDataById from "@/hooks/useGetBranchDataById";
+import useModifyBranchData from "@/hooks/useModifyBranchData";
 import { ModalContext } from "@/context/ModalContext";
 import { initialValue } from "@/constants/admin";
 import FormComponent from "@/components/FormComponent";
-import useGetBranchDataById from "@/hooks/useGetBranchDataById";
 
 interface pageProps {
   params: { id: string; branch: string };
@@ -19,11 +19,14 @@ export default function EditItem({ params }: pageProps) {
   const router = useRouter();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    const { modifyData } = useModifyBranchData(branch, id, values);
     e.preventDefault();
-    const response = await modifyItemForm({ id, values, branch });
-    if (response.success === "NOT_FOUND") return;
-    openModal(response);
-    if (response.success) {
+
+    const res = await modifyData();
+
+    if (res.success === "NOT_FOUND") return;
+    openModal(res);
+    if (res.success) {
       const url = "/admin/" + branch;
       setValues(initialValue[branch as keyof typeof initialValue]);
       router.push(url);

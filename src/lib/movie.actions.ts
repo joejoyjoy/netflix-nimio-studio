@@ -180,7 +180,7 @@ export async function deleteMovieById(id: string) {
   }
 }
 
-export async function modifyMovie(id: string, values) {
+export async function modifyMovie(id: string, values: any) {
   try {
     const validate = MovieSchema.safeParse(values);
 
@@ -195,41 +195,45 @@ export async function modifyMovie(id: string, values) {
         },
       });
 
-      const disconnectActors = existingMovie.actors.map((actor) => ({
-        id: actor.id,
-      }));
-      const disconnectCategories = existingMovie.categories.map((category) => ({
-        id: category.id,
-      }));
+      if (existingMovie !== null) {
+        const disconnectActors = existingMovie.actors.map((actor) => ({
+          id: actor.id,
+        }));
+        const disconnectCategories = existingMovie.categories.map(
+          (category) => ({
+            id: category.id,
+          })
+        );
 
-      await prisma.movie.update({
-        where: {
-          id,
-        },
-        data: {
-          name: values.name,
-          overview: values.overview,
-          year: Number(values.year),
-          duration: Number(values.duration),
-          director: {
-            connect: {
-              id: values.director[0],
+        await prisma.movie.update({
+          where: {
+            id,
+          },
+          data: {
+            name: values.name,
+            overview: values.overview,
+            year: Number(values.year),
+            duration: Number(values.duration),
+            director: {
+              connect: {
+                id: values.director[0],
+              },
+            },
+            actors: {
+              disconnect: disconnectActors,
+              connect: values.actor.map((actorId: any) => ({
+                id: actorId,
+              })),
+            },
+            categories: {
+              disconnect: disconnectCategories,
+              connect: values.category.map((categoryId: any) => ({
+                id: categoryId,
+              })),
             },
           },
-          actors: {
-            disconnect: disconnectActors,
-            connect: values.actor.map((actorId) => ({
-              id: actorId,
-            })),
-          },
-          categories: {
-            disconnect: disconnectCategories,
-            connect: values.category.map((categoryId) => ({
-              id: categoryId,
-            })),
-          },
-        },
-      });
+        });
+      }
     }
 
     return JSON.parse(JSON.stringify(validate));

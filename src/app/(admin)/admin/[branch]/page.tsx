@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { adminDataStructure } from "@/constants/admin";
-import { deleteItemById } from "@/lib/delete.actions";
 import useGetBranchContent from "@/hooks/useGetBranchContent";
+import useDeleteBranchItemById from "@/hooks/useDeleteBranchItemById";
 
 interface pageProps {
   params: { branch: string };
@@ -16,7 +16,10 @@ export default function ViewAllItems({ params }: pageProps) {
   const { branchContent, setBranchContent } = useGetBranchContent(branch);
 
   const handleDelete = async (id: string, branch: string) => {
-    const res = await deleteItemById({ id, branch });
+    const { deleteBranchItem } = useDeleteBranchItemById(branch, id);
+
+    const res = await deleteBranchItem();
+
     const deleteFromState = branchContent.filter((item) => item.id !== res.id);
     setBranchContent(deleteFromState);
   };

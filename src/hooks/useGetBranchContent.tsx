@@ -1,7 +1,7 @@
 import { adminDataStructure, initialValue } from "@/constants/admin";
 import { useEffect, useState } from "react";
 
-function useGetBranchContent(branch: string) {
+export default function useGetBranchContent(branch: string) {
   const [branchContent, setBranchContent] = useState(
     initialValue[branch as keyof typeof initialValue]
   );
@@ -30,5 +30,3 @@ function useGetBranchContent(branch: string) {
     setBranchContent,
   };
 }
-
-export default useGetBranchContent;

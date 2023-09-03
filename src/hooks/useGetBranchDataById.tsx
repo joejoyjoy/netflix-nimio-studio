@@ -2,7 +2,7 @@ import { adminDataStructure, initialValue } from "@/constants/admin";
 import { transformToEditable } from "@/utils/transformToEditable";
 import { useEffect, useState } from "react";
 
-function useGetBranchDataById(branch: string, id: string) {
+export default function useGetBranchDataById(branch: string, id: string) {
   const [idExist, setIdExist] = useState(false);
   const [values, setValues] = useState(
     initialValue[branch as keyof typeof initialValue]
@@ -47,5 +47,3 @@ function useGetBranchDataById(branch: string, id: string) {
     idExist,
   };
 }
-
-export default useGetBranchDataById;

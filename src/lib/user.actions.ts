@@ -26,10 +26,10 @@ export async function getSignedInUserData({
   }
 }
 
-export async function updateUserToAdmin(id: User["id"]) {
+export async function updateUserRole(id: User["id"]) {
   try {
     if (!id) {
-      return console.error("Error: No id value on updateUserToAdmin Fn() call");
+      return console.error("Error: No id value on updateUserRole Fn() call");
     }
 
     const userIsAdmin = await prisma.user.findUnique({
@@ -55,6 +55,6 @@ export async function updateUserToAdmin(id: User["id"]) {
       return JSON.parse(JSON.stringify(updateUsers));
     }
   } catch (error: any) {
-    throw new Error(`Failed by getSignedInUserData Fn(): ${error.message}`);
+    throw new Error(`Failed by updateUserRole Fn(): ${error.message}`);
   }
 }
