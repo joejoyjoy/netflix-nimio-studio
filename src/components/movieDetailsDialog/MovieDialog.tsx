@@ -21,7 +21,7 @@ export default function MovieDialog() {
         <div>
           <button
             onClick={closeMovieDialog}
-            className="absolute top-0 -left-14 text-white"
+            className="absolute top-0 -left-14 xl:-top-12 xl:left-1 text-white"
           >
             <FaXmark size={32} />
           </button>

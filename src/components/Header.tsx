@@ -5,13 +5,10 @@ import { usePathname } from "next/navigation";
 import UserModalCard from "@/components/UI/UserModalCard";
 import { adminHeaderNavLinks, homeHeaderNavLinks } from "@/constants";
 import { activeLink } from "./utils/activeLink";
-import { DialogContext } from "@/context/DialogContext";
-import { useContext } from "react";
 
 export default function Header({ role }: { role: string }) {
   const currentPath = usePathname();
   const pattern = /\/form.*/;
-  const { openMovieDialog } = useContext(DialogContext);
 
   const getPathName = () => {
     const parts = currentPath.split("/");
@@ -50,7 +47,6 @@ export default function Header({ role }: { role: string }) {
               </Link>
             );
           })}
-          <button onClick={openMovieDialog}>Open</button>
         </nav>
         <div className="flex items-center gap-6">
           {role === "ADMIN" &&

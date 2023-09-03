@@ -79,13 +79,19 @@ const config: Config = {
       desktop: "1280px",
       // => @media (min-width: 1280px) { ... }
 
+      xl: { max: "1024px" },
+      // => @media (max-width: 1024px) { ... }
+
       lg: { max: "750px" },
       // => @media (max-width: 750px) { ... }
 
       md: { max: "600px" },
       // => @media (max-width: 600px) { ... }
 
-      sm: { max: "450px" },
+      sm: { max: "550px" },
+      // => @media (max-width: 550px) { ... }
+
+      xs: { max: "450px" },
       // => @media (max-width: 450px) { ... }
     },
   },

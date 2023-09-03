@@ -60,7 +60,7 @@
 
   /*** MOVIE DETAILS DIALOG STYLES ***/
   .movie-dialog-content {
-    @apply absolute top-11 left-36 right-36 bg-slate-5 rounded-l-2xl z-20;
+    @apply absolute top-11 left-36 right-36 xl:top-16 xl:left-10 xl:right-10 lg:left-0 lg:right-0 bg-slate-5 rounded-l-2xl lg:rounded-none z-20;
   }
   .movie-dialog-backdrop {
     @apply fixed inset-0 w-full h-full bg-black/70 z-20;

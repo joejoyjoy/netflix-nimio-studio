@@ -55,3 +55,31 @@ interface MovieIncludeCategory {
     }
   ];
 }
+
+interface MovieIncludeAll {
+  id: string;
+  name: string;
+  overview: string;
+  year: number;
+  duration: number;
+  cover: {
+    secure_url: string;
+  };
+  categories: [
+    {
+      name: string;
+    }
+  ];
+  director: {
+    id: string;
+    name: string;
+    born: number;
+    bio: string;
+  };
+  actors: Array<{
+    id: string;
+    name: string;
+    born: number;
+    bio: string;
+  }>;
+}

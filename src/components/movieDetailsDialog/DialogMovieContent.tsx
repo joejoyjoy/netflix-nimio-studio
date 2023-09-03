@@ -1,20 +1,45 @@
-import React from "react";
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import { getAllMoviesAndInclude } from "@/lib/movie.actions";
 import { downScaleImage } from "@/utils/downScaleImage";
 import { minutesToHours } from "@/utils/minutesToHours";
 import { categoriesToString } from "@/utils/categoriesToString";
+import PersonCard from "../UI/PersonCard";
+import MovieCard from "../UI/MovieCard";
+import { suggestedMovies } from "@/utils/suggestedMovies";
 
 export default function DialogMovieContent({
   data,
 }: {
-  data: MovieIncludeCategory;
+  data: MovieIncludeAll;
 }) {
-  const { name, cover, overview, year, duration, categories } = data;
+  const {
+    id,
+    name,
+    cover,
+    overview,
+    year,
+    duration,
+    categories,
+    director,
+    actors,
+  } = data;
+  const [moviesData, setMoviesData] = useState<Array<MovieIncludeCategory>>([]);
+
+  useEffect(() => {
+    const requestData = async () => {
+      const res = await getAllMoviesAndInclude();
+      setMoviesData(res);
+    };
+    requestData();
+  }, []);
 
   return (
     <div className="p-8 w-full max-h-[calc(100vh-66px)] overflow-y-auto overflow-hidden">
-      <div className="grid grid-cols-[auto,1fr] gap-4">
-        <div className="relative  w-48 aspect-[3/4] bg-slate-2 overflow-hidden rounded-sm">
+      <article className="grid grid-cols-[auto,1fr] sm:grid-cols-1 gap-4 mb-4">
+        <div className="relative w-48 md:w-32 xs:w-full aspect-[3/4] xs:aspect-[4/5] bg-slate-2 overflow-hidden rounded-md">
           <Image
             src={downScaleImage(cover.secure_url)}
             alt={name}
@@ -24,14 +49,14 @@ export default function DialogMovieContent({
             priority
           />
         </div>
-        <div className="flex flex-col justify-center gap-3">
+        <div className="flex flex-col justify-center gap-3 md:gap-1 sm:gap-3">
           <div>
             <p>Name</p>
             <h3 className="text-lg text-white line-clamp-1">{name}</h3>
           </div>
           <div>
             <p>Overview</p>
-            <h3 className="text-sm text-white font-light line-clamp-4">
+            <h3 className="text-sm text-white font-light line-clamp-4 md:line-clamp-2">
               {overview}
             </h3>
           </div>
@@ -54,42 +79,38 @@ export default function DialogMovieContent({
             </span>
           </div>
         </div>
-      </div>
-      <h3>
-        {data.name} Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Aperiam temporibus non nam earum amet, eum et atque culpa magni, ullam
-        maxime? Maxime tempore veritatis totam quisquam temporibus ducimus error
-        animi. Voluptatibus labore accusamus quas distinctio. Consectetur ab
-        voluptatum recusandae magnam, culpa temporibus laboriosam, explicabo
-        quisquam distinctio officia natus libero, facere animi voluptatibus
-        nulla aperiam enim sapiente id. Laudantium, in accusamus? Repellendus
-        eius quam suscipit possimus eos vitae quidem, saepe veritatis accusamus
-        quae, debitis hic? Odio dolorem, ad sequi nemo pariatur, facilis dicta
-        numquam corrupti quasi dolor dolore corporis maxime error. Quasi commodi
-        dolores, similique expedita nulla velit voluptatem officia deserunt
-        itaque tenetur quisquam repudiandae dolor illo cupiditate veniam.
-        Corrupti quo aperiam, excepturi tempore vero modi possimus dolorum
-        reiciendis officiis architecto! Magni, facere ab veniam non iure,
-        doloremque harum voluptatem nihil porro odit, iusto quasi ad a fugiat
-        illum laudantium omnis! Delectus dolorum debitis tempora tenetur
-        mollitia dignissimos veniam, sapiente atque. Ullam officiis quod
-        consequatur minus fuga ut at optio, animi ipsa possimus quas
-        consectetur, temporibus ratione aliquid rerum recusandae illum atque.
-        Impedit nihil, nesciunt architecto autem perspiciatis recusandae
-        laboriosam maiores. Aspernatur earum sed, quos vel tempora est ex
-        consequuntur nulla atque unde? Asperiores autem dolore dicta quasi sequi
-        necessitatibus, quae sint, nihil voluptatem ipsam quisquam libero,
-        aperiam sed ad obcaecati! Earum exercitationem ut, vitae illum quia
-        veniam ipsum ea hic. Nulla numquam temporibus vel libero accusamus
-        repellat eveniet eligendi corrupti minus voluptatem debitis eius non
-        dolorem modi, facere aliquid ducimus? A illum quisquam necessitatibus.
-        Sapiente, facere distinctio dolor ab nulla qui. Saepe, nobis dignissimos
-        corrupti neque quidem laudantium recusandae facilis, omnis nam dolore
-        nisi ad laborum aliquam quae facere a! Vitae architecto repellat quasi
-        saepe nihil commodi, consectetur non reiciendis est nesciunt totam autem
-        ullam impedit doloribus praesentium ducimus qui laborum modi, cumque
-        natus. Sint omnis laboriosam perferendis molestiae doloribus?
-      </h3>
+      </article>
+      <section className="flex gap-4">
+        <div>
+          <p className="text-xl">Director:</p>
+          <PersonCard data={director} />
+        </div>
+        <div>
+          <p className="text-xl">Actors:</p>
+          <div className="flex gap-2 max-w-[calc(100vw-35rem)] xl:max-w-[calc(100vw-22rem)] lg:max-w-[calc(100vw-17rem)] md:max-w-[calc(100vw-13rem)] overflow-x-auto overflow-hidden">
+            {actors.map((actor) => (
+              <PersonCard key={actor.id} data={actor} />
+            ))}
+            {actors.map((actor) => (
+              <PersonCard key={actor.id} data={actor} />
+            ))}
+            {actors.map((actor) => (
+              <PersonCard key={actor.id} data={actor} />
+            ))}
+            {actors.map((actor) => (
+              <PersonCard key={actor.id} data={actor} />
+            ))}
+          </div>
+        </div>
+      </section>
+      <section>
+        <p className="mt-8 mb-4 text-2xl text-white">Other movies to watch:</p>
+        <div className="grid laptop:grid-cols-3 tablet:grid-cols-2 grid-cols-1 gap-8">
+          {suggestedMovies(moviesData, id).map((movie) => (
+            <MovieCard key={movie.id} data={movie} />
+          ))}
+        </div>
+      </section>
     </div>
   );
 }
