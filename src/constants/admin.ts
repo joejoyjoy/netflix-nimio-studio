@@ -304,3 +304,40 @@ export const initialValue = {
     bio: "",
   },
 };
+export const initialValueArray = {
+  movie: [
+    {
+      id: "",
+      name: "",
+      overview: "",
+      year: 0,
+      duration: 0,
+      cover: {
+        public_id: "",
+        secure_url: "",
+      },
+    },
+  ],
+  director: [
+    {
+      id: "",
+      name: "",
+      born: 0,
+      bio: "",
+    },
+  ],
+  category: [
+    {
+      id: "",
+      name: "",
+    },
+  ],
+  actor: [
+    {
+      id: "",
+      name: "",
+      born: 0,
+      bio: "",
+    },
+  ],
+};

@@ -1,9 +1,9 @@
-import { adminDataStructure, initialValue } from "@/constants/admin";
+import { adminDataStructure, initialValueArray } from "@/constants/admin";
 import { useEffect, useState } from "react";
 
 export default function useGetBranchContent(branch: string) {
   const [branchContent, setBranchContent] = useState(
-    initialValue[branch as keyof typeof initialValue]
+    initialValueArray[branch as keyof typeof initialValueArray]
   );
 
   useEffect(() => {
