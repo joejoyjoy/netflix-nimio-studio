@@ -56,7 +56,7 @@ export default function DialogMovieContent({
           </div>
           <div>
             <p>Overview</p>
-            <h3 className="text-sm text-white font-light line-clamp-4 md:line-clamp-2">
+            <h3 className="text-sm text-white font-light line-clamp-4 md:line-clamp-2 sm:line-clamp-5">
               {overview}
             </h3>
           </div>
