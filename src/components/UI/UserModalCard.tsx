@@ -80,12 +80,12 @@ export default function UserModalCard({ role }: { role?: string }) {
       </button>
       <section
         id="userCard"
-        className={`absolute top-[54px] right-0 flex flex-col items-end w-[375px] z-40 before:content-[""] before:rotate-45 ${
+        className={`absolute top-[54px] xs:-right-8 right-0 flex flex-col items-end w-[375px] z-40 before:content-[""] before:rotate-45 ${
           popperOpen ? "popper-active" : "popper-inactive"
         }`}
       >
         <div className="w-[calc(375px-2rem)] rounded-xl shadow-2xl bg-slate-5 overflow-hidden">
-          <div className="flex justify-center absolute -top-[12px] right-0 w-8 p-0 m-0 text-slate-3">
+          <div className="flex justify-center absolute -top-[12px] xs:right-8 right-0 w-8 p-0 m-0 text-slate-3">
             <GoTriangleUp />
           </div>
           <div className="flex items-center gap-3 py-3 px-5 border-b-[1px] border-slate-2 transition duration-150">
