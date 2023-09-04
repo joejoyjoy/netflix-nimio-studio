@@ -2,35 +2,45 @@
 
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-) <img alt="Version" src="https://img.shields.io/badge/version-1.0-blue.svg?cacheSeconds=2592000" />
 
-# Prueba técnica Nimio Studio gestión de películas CRUD
+# Prueba técnica Nimio Studio: Gestión de Películas CRUD
 
-> Se trata de una aplicatión web creado con NextJS13, TypeScript y una base de datos MySQL con Prisma ORM. El proyecto ha sido creado por Joe Alt para satisfacer la pruba técnica de un gestión de películas para Nimio Studio.
+> Se trata de una aplicación web creada con Next.js 13, TypeScript y una base de datos MySQL utilizando Prisma ORM. El proyecto ha sido creado por Joe Alt para cumplir con la prueba técnica de gestión de películas para Nimio Studio.
 
-## Index
+## Índice
 
-- [Instalación](#Instalación)
+- [Instalación](#instalación)
 - [Sobre el proyecto](#sobre-el-proyecto)
-- [Deploy version](#deploy-version)
-- [Creador](#creador-)
+- [Versión desplegada](#versión-desplegada)
+- [Creador](#creador)
+- [Licencia](#licencia)
 
 ## Instalación
 
-- ```
-   git clone https://github.com/joejoyjoy/netflix-nimio-studio
-  ```
-- ```
-    cd netflix-nimio-studio
-  ```
+1. Clona el repositorio:
 
-- ```
-    npm install
-  ```
+```
+git clone https://github.com/joejoyjoy/netflix-nimio-studio
+```
 
-- Crea y configura de forma correcto el archivo .env teniendo como referencia el archivo .env.example. Introduce los env keys como proviende en el .env.example y rellenalas con rus propios credentiales.
+2. Ve al directorio del proyecto:
 
-- ```
-    npm run dev
-  ```
+```
+cd netflix-nimio-studio
+```
+
+3. Instala las dependencias:
+
+```
+npm install
+```
+
+4. Crea y configura correctamente el archivo .env siguiendo las instrucciones en el archivo .env.example. Introduce las claves de entorno según se indican en el .env.example y rellénalas con tus propias credenciales.
+
+5. Ejecuta la aplicación en modo de desarrollo:
+
+```
+npm run dev
+```
 
 ## Sobre el proyecto
 
@@ -44,40 +54,39 @@ Además, la página de inicio ha sido diseñada para ser responsive con disposit
 
 ### Futuras Implementaciones 📕
 
-Here are some potential areas for improvement in the application:
+Aquí hay algunas áreas potenciales de mejora en la aplicación:
 
 1. **Más Proveedores de Autenticación:** Agregar más opciones de proveedores de autenticación además de GitHub para dar a los usuarios más opciones al registrarse.
 2. **Mejora de la Interfaz de Usuario:** Continuar mejorando la interfaz de usuario y la experiencia del usuario en dispositivos móviles y de escritorio.
 3. **Sistema de Calificación:** Implementar un sistema de calificación para que los usuarios puedan calificar las películas y ver las calificaciones promedio.
-4. **Detalles sobre Director y Actores** Implementar una option de leer las biofrafias de los directores y actores de la pelicula.
+4. **Detalles sobre el Director y Actores:** Implementar una opción para leer las biografías de los directores y actores de la película.
 
-## Versión deployada
+## Versión desplegada
 
-#### Simplemente quieres ver la página en actión?
+#### ¿Quieres ver la página en acción?
 
-Buenas notifias! Aquí tienes una versión deployada para acceder.
-Entra en [netflix-nimio-studio.vercel.app](https://netflix-nimio-studio.vercel.app/) para explorar la aplicación sin tener que descargar y configurar antes.
+¡Buenas noticias! Aquí tienes una versión desplegada para explorar. Visita [netflix-nimio-studio.vercel.app](https://netflix-nimio-studio.vercel.app/) para explorar la aplicación sin tener que descargarla y configurarla previamente.
 
 ## Creador ✨
 
 <table>
-  <tbody>
-    <tr>
-      <td align="center">
-        <a href="https://github.com/joejoyjoy">
-          <img src="https://avatars.githubusercontent.com/u/73751755" width="100px" alt="Joe Alt"/>
-          <br />
-          <sub>
-          <b>Joe Alt</b>
-          </sub>
-        </a>
+<tbody>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/joejoyjoy">
+        <img src="https://avatars.githubusercontent.com/u/73751755" width="100px" alt="Joe Alt"/>
         <br />
-        <a href="#developer-joe" title="code-tools-maintenance-design">💻🔧🚧🎨</a>
-      </td>
-    </tr>
-  </tbody>
+        <sub>
+        <b>Joe Alt</b>
+        </sub>
+      </a>
+      <br />
+      <a href="#developer-joe" title="code-tools-maintenance-design">💻🔧🚧🎨</a>
+    </td>
+  </tr>
+</tbody>
 </table>
 
 ## Licencia
 
-Este proyecto esta licienciado por MIT License
+Este proyecto está bajo la Licencia MIT.
