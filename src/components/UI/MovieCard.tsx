@@ -7,7 +7,7 @@ import { minutesToHours } from "@/utils/minutesToHours";
 import { FaPlay } from "react-icons/fa";
 import { DialogContext } from "@/context/DialogContext";
 
-export default function MovieCard({ data }: { data: MovieIncludeCategory }) {
+export default function MovieCard({ data }: { data: MovieIncludeAll }) {
   const { openMovieDialog } = useContext(DialogContext);
 
   return (

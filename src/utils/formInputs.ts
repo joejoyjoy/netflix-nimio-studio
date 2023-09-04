@@ -12,7 +12,7 @@ interface Arr {
   dataLimit?: undefined;
 }
 
-export const textAndTextareaFields = (inputs: Array<Arr>) => {
+export const textAndTextareaFields = (inputs: Arr[]) => {
   const fields = inputs.filter(
     (input) => input.type === "text" || input.type === "textarea"
   );

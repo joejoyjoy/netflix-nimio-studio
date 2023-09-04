@@ -1,34 +1,83 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+`#homework-assignment` `#nextJS13` `#typescript` `#tailwind` `#prisma-orm`
 
-## Getting Started
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-) <img alt="Version" src="https://img.shields.io/badge/version-1.0-blue.svg?cacheSeconds=2592000" />
 
-First, run the development server:
+# Prueba técnica Nimio Studio gestión de películas CRUD
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+> Se trata de una aplicatión web creado con NextJS13, TypeScript y una base de datos MySQL con Prisma ORM. El proyecto ha sido creado por Joe Alt para satisfacer la pruba técnica de un gestión de películas para Nimio Studio.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Index
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- [Instalación](#Instalación)
+- [Sobre el proyecto](#sobre-el-proyecto)
+- [Deploy version](#deploy-version)
+- [Creador](#creador-)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Instalación
 
-## Learn More
+- ```
+   git clone https://github.com/joejoyjoy/netflix-nimio-studio
+  ```
+- ```
+    cd netflix-nimio-studio
+  ```
 
-To learn more about Next.js, take a look at the following resources:
+- ```
+    npm install
+  ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Crea y configura de forma correcto el archivo .env teniendo como referencia el archivo .env.example. Introduce los env keys como proviende en el .env.example y rellenalas con rus propios credentiales.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- ```
+    npm run dev
+  ```
 
-## Deploy on Vercel
+## Sobre el proyecto
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+La aplicación web ofrece una página de inicio con todas las películas disponibles. Al hacer clic en una de ellas, puedes acceder a más detalles sobre la película seleccionada. También podrás ver información sobre el director y los actores que forman parte de la película.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Para aquellos que estén registrados y tengan el rol de "Admin", hay una pestaña de panel de administración que permite gestionar y editar películas. Además, puedes crear, modificar y eliminar autores, categorías y directores de películas. Se ha utilizado Zod para verificar que los formularios se creen correctamente desde el lado del backend y para manejar errores en caso de que el usuario cometa algún error.
+
+Las portadas de las películas pueden cargarse desde el disco local y se suben a Cloudinary para almacenarlas en la nube y obtener una URL válida para la portada de la película.
+
+Además, la página de inicio ha sido diseñada para ser responsive con dispositivos móviles y se ha testeado la aplicación en el navegador Chrome.
+
+### Futuras Implementaciones 📕
+
+Here are some potential areas for improvement in the application:
+
+1. **Más Proveedores de Autenticación:** Agregar más opciones de proveedores de autenticación además de GitHub para dar a los usuarios más opciones al registrarse.
+2. **Mejora de la Interfaz de Usuario:** Continuar mejorando la interfaz de usuario y la experiencia del usuario en dispositivos móviles y de escritorio.
+3. **Sistema de Calificación:** Implementar un sistema de calificación para que los usuarios puedan calificar las películas y ver las calificaciones promedio.
+4. **Detalles sobre Director y Actores** Implementar una option de leer las biofrafias de los directores y actores de la pelicula.
+
+## Versión deployada
+
+#### Simplemente quieres ver la página en actión?
+
+Buenas notifias! Aquí tienes una versión deployada para acceder.
+Entra en [netflix-nimio-studio.vercel.app](https://netflix-nimio-studio.vercel.app/) para explorar la aplicación sin tener que descargar y configurar antes.
+
+## Creador ✨
+
+<table>
+  <tbody>
+    <tr>
+      <td align="center">
+        <a href="https://github.com/joejoyjoy">
+          <img src="https://avatars.githubusercontent.com/u/73751755" width="100px" alt="Joe Alt"/>
+          <br />
+          <sub>
+          <b>Joe Alt</b>
+          </sub>
+        </a>
+        <br />
+        <a href="#developer-joe" title="code-tools-maintenance-design">💻🔧🚧🎨</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Licencia
+
+Este proyecto esta licienciado por MIT License

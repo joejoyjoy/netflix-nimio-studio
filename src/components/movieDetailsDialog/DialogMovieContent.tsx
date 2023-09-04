@@ -26,7 +26,7 @@ export default function DialogMovieContent({
     director,
     actors,
   } = data;
-  const [moviesData, setMoviesData] = useState<Array<MovieIncludeCategory>>([]);
+  const [moviesData, setMoviesData] = useState<Array<MovieIncludeAll>>([]);
 
   useEffect(() => {
     const requestData = async () => {

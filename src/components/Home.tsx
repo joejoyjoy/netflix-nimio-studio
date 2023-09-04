@@ -5,7 +5,7 @@ import MovieCard from "./UI/MovieCard";
 import { getAllMoviesAndInclude } from "@/lib/movie.actions";
 
 export default function Home() {
-  const [moviesData, setMoviesData] = useState<Array<MovieIncludeCategory>>([]);
+  const [moviesData, setMoviesData] = useState<Array<MovieIncludeAll>>([]);
 
   useEffect(() => {
     const requestData = async () => {

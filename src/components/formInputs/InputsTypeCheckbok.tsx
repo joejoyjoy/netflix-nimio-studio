@@ -34,10 +34,11 @@ function DropdownSelector(props: { props: Props }) {
   const [popperOpen, setPopperOpen] = useState<boolean>(false);
   let popperRef = useRef<HTMLInputElement>(null);
 
-  const checkIfTrue = (id: string) => {
-    const currentValue = values[inputProps.name] || [];
+  // @ts-ignore
+  const contentItem = values[inputProps.name] || [];
 
-    if (!currentValue.includes(id)) {
+  const checkIfTrue = (id: string) => {
+    if (!contentItem.includes(id)) {
       return false;
     } else {
       return true;
@@ -45,13 +46,13 @@ function DropdownSelector(props: { props: Props }) {
   };
 
   const handleChange = (id: string) => {
-    const currentValue = values[inputProps.name] || [];
-
-    if (!currentValue.includes(id)) {
-      const updatedValue = [...currentValue, id];
+    if (!contentItem.includes(id)) {
+      const updatedValue = [...contentItem, id];
       setValues({ ...values, [inputProps.name]: updatedValue });
     } else {
-      const updatedValue = currentValue.filter((valueId) => valueId !== id);
+      const updatedValue = contentItem.filter(
+        (valueId: string) => valueId !== id
+      );
       setValues({ ...values, [inputProps.name]: updatedValue });
     }
   };
@@ -70,6 +71,9 @@ function DropdownSelector(props: { props: Props }) {
     };
   }, []);
 
+  // @ts-ignore
+  const valuesInput = values[inputProps.name];
+
   return (
     <div ref={popperRef} className="relative">
       <button
@@ -77,9 +81,9 @@ function DropdownSelector(props: { props: Props }) {
         onClick={() => setPopperOpen(!popperOpen)}
         className="form-input-checkbox text-left"
       >
-        {values[inputProps.name] === undefined
+        {valuesInput === undefined
           ? "-- Select your states --"
-          : "-- " + values[inputProps.name].length + " selected --"}
+          : "-- " + valuesInput.length + " selected --"}
       </button>
       {popperOpen && (
         <div className="absolute top-12 max-w-[550px] max-h-[260px] form-input-checkbox overflow-y-auto p-0 z-10">

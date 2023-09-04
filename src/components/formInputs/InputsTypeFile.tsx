@@ -32,6 +32,7 @@ export default function InputsTypeFile(props: Props) {
 function InputTypeFile(props: { props: Props }) {
   const { label, errorMessage, onChange, id, values, ...inputProps } =
     props.props;
+  // @ts-ignore
   const initialValue = values?.cover.secure_url ? values?.cover.secure_url : "";
   const [imagePreview, setImagePreview] = useState<string>(initialValue);
 
@@ -57,31 +58,32 @@ function InputTypeFile(props: { props: Props }) {
     setImagePreview("");
   };
 
+  // @ts-ignore
+  const secure_url = values?.cover.secure_url;
+
   return (
     <>
-      <div
-        className={`${values?.cover.secure_url ? "cursor-not-allowed" : ""}`}
-      >
-        {imagePreview || values?.cover.secure_url ? (
+      <div className={`${secure_url ? "cursor-not-allowed" : ""}`}>
+        {imagePreview || secure_url ? (
           <button
             type="button"
             onClick={handleFileDelete}
             className={`relative label-file-form group overflow-hidden p-3 ${
-              values?.cover.secure_url ? "pointer-events-none" : ""
+              secure_url ? "pointer-events-none" : ""
             }`}
           >
             <div className="flex items-center w-full h-full overflow-hidden">
               <Image
-                src={imagePreview || values?.cover.secure_url}
+                src={imagePreview || secure_url}
                 alt="profile icon"
                 width={288}
                 height={384}
                 className="block w-full h-hull object-cover rounded-sm"
                 placeholder="blur"
-                blurDataURL={imagePreview || values?.cover.secure_url}
+                blurDataURL={imagePreview || secure_url}
                 priority
               />
-              {values?.cover.secure_url === undefined && (
+              {secure_url === undefined && (
                 <div className="label-file-preview-form group-hover:opacity-100 group-hover:bg-black group-hover:bg-opacity-40">
                   <CiTrash />
                 </div>

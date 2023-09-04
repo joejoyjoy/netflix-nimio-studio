@@ -65,11 +65,9 @@ interface MovieIncludeAll {
   cover: {
     secure_url: string;
   };
-  categories: [
-    {
-      name: string;
-    }
-  ];
+  categories: Array<{
+    name: string;
+  }>;
   director: {
     id: string;
     name: string;

@@ -2,8 +2,8 @@ import { createContext, useState, ReactNode, useEffect } from "react";
 
 export interface DialogInterface {
   isDialogOpen: boolean;
-  userSelectedMovie: MovieIncludeCategory | undefined;
-  openMovieDialog: (data: MovieIncludeCategory) => void;
+  userSelectedMovie: MovieIncludeAll | undefined;
+  openMovieDialog: (data: MovieIncludeAll) => void;
   closeMovieDialog: () => void;
 }
 
@@ -19,10 +19,10 @@ export const DialogContext = createContext(defaultState);
 export default function DialogProvider({ children }: { children: ReactNode }) {
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [userSelectedMovie, setUserSelectedMovie] = useState<
-    MovieIncludeCategory | undefined
+    MovieIncludeAll | undefined
   >(undefined);
 
-  const openMovieDialog = (data: MovieIncludeCategory) => {
+  const openMovieDialog = (data: MovieIncludeAll) => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     if (userSelectedMovie !== undefined) {
       closeMovieDialog();
